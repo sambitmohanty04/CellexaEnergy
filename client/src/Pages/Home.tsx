@@ -39,7 +39,7 @@ const Home: React.FC = () => {
               <p className="text-blue-100 text-lg md:text-xl leading-8 !mb-8 max-w-2xl">
                 We deliver innovative, reliable and sustainable energy
                 solutions designed to create long-term value for businesses,
-                communities and the environment.
+                communities and environment.
               </p>
 
               <div className="flex flex-wrap gap-4">
