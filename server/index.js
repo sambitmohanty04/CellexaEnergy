@@ -60,7 +60,7 @@ app.get("/api/submenu", async (req, res) => {
   }
 });
 // Get all contacts
-app.get("/contactus", async (req, res) => {
+app.get("/api/contactus", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM contact_us ORDER BY id DESC"
@@ -74,16 +74,40 @@ app.get("/contactus", async (req, res) => {
     });
   }
 });
-// app.post("/api/users", (req, res) => {
-//   console.log("========== LOGIN API HIT ==========");
-//   console.log("Body:", req.body);
+//Save data in ContactUs
+app.post("/api/contactus", async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      subject,
+      message,
+    } = req.body;
 
-//   return res.json({
-//     success: true,
-//     message: "Login Successful",
-//     user: result.rows[1]
-//   });
-// });
+    const result = await pool.query(
+      `INSERT INTO contact_us
+       (full_name, email, phone, subject, message)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [name, email, phone, subject, message]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Contact form submitted successfully",
+      data: result.rows[0],
+    });
+
+  } catch (error) {
+    console.error("Insert Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to submit contact form",
+    });
+  }
+});
 // Login API
 app.post("/api/users", async (req, res) => {
   try {

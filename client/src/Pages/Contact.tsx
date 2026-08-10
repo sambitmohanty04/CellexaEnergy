@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import API_URL from '../service/api';
+
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,19 +13,19 @@ const Contact: React.FC = () => {
 
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  //   <>
-      
 
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  // Handle input changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  {/* const handleSubmit = async (e: React.FormEvent) => {
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setSuccessMessage("");
@@ -33,8 +35,11 @@ const Contact: React.FC = () => {
       const response = await API_URL.post("/contactus", formData);
 
       if (response.data.success) {
-        setSuccessMessage("Thank you! Your message has been submitted.");
+        setSuccessMessage(
+          "Thank you! Your message has been submitted."
+        );
 
+        // Clear form
         setFormData({
           name: "",
           email: "",
@@ -43,18 +48,22 @@ const Contact: React.FC = () => {
           message: "",
         });
       } else {
-        setErrorMessage(response.data.message || "Something went wrong.");
+        setErrorMessage(
+          response.data.message || "Something went wrong."
+        );
       }
     } catch (error: any) {
+      console.error("Contact form error:", error);
+
       setErrorMessage(
         error.response?.data?.message ||
           "Unable to submit your message. Please try again."
       );
     }
-  }; */}
+  };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen" >
 
       {/* Page Header */}
       <section className="bg-blue-900 text-white py-16">
@@ -184,8 +193,18 @@ const Contact: React.FC = () => {
                   {errorMessage}
                 </div>
               )} */}
+              {successMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-green-100 border border-green-300 text-green-700">
+                  {successMessage}
+                </div>
+              )}
 
-              <form className='mt-5'>
+              {errorMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-red-100 border border-red-300 text-red-700">
+                  {errorMessage}
+                </div>
+              )}
+              <form className='mt-5' onSubmit={handleSubmit}>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -198,8 +217,8 @@ const Contact: React.FC = () => {
                     <input
                       type="text"
                       name="name"
-                      // value={formData.name}
-                      // onChange={handleChange}
+                       value={formData.name}
+                       onChange={handleChange}
                       required
                       placeholder="Enter your name"
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -215,8 +234,8 @@ const Contact: React.FC = () => {
                     <input
                       type="email"
                       name="email"
-                      // value={formData.email}
-                      // onChange={handleChange}
+                       value={formData.email}
+                      onChange={handleChange}
                       required
                       placeholder="Enter your email"
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -232,8 +251,8 @@ const Contact: React.FC = () => {
                     <input
                       type="tel"
                       name="phone"
-                      // value={formData.phone}
-                      // onChange={handleChange}
+                      value={formData.phone}
+                       onChange={handleChange}
                       placeholder="Enter phone number"
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -248,8 +267,8 @@ const Contact: React.FC = () => {
                     <input
                       type="text"
                       name="subject"
-                      // value={formData.subject}
-                      // onChange={handleChange}
+                       value={formData.subject}
+                       onChange={handleChange}
                       required
                       placeholder="Enter subject"
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -267,8 +286,8 @@ const Contact: React.FC = () => {
 
                   <textarea
                     name="message"
-                    // value={formData.message}
-                    // onChange={handleChange}
+                     value={formData.message}
+                     onChange={handleChange}
                     required
                     rows={6}
                     placeholder="Write your message..."
