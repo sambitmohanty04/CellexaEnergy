@@ -7,23 +7,49 @@ dotenv.config();
 
 const app = express();
 
+// ======================================================
 // Middleware
+// ======================================================
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
+    origin: (origin, callback) => {
+      // Allow requests without origin
+      // Example: Postman, server-to-server requests
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
 
 app.use(express.json());
 
+// ======================================================
 // Home Route
+// ======================================================
+
 app.get("/", (req, res) => {
-  res.send("Server Running");
+  res.status(200).send("Server Running");
 });
 
-// Menu
+// ======================================================
+// Menu API
+// ======================================================
+
 app.get("/api/menu", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -36,18 +62,21 @@ app.get("/api/menu", async (req, res) => {
       ORDER BY display_order
     `);
 
-    res.json(result.rows);
-  } catch (err) {
-    console.error("Menu Error:", err);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Menu Error:", error);
 
     res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to fetch menu",
     });
   }
 });
 
-// Submenu
+// ======================================================
+// Submenu API
+// ======================================================
+
 app.get("/api/submenu", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -60,27 +89,54 @@ app.get("/api/submenu", async (req, res) => {
       ORDER BY menu_id, display_order
     `);
 
-    res.json(result.rows);
-  } catch (err) {
-    console.error("Submenu Error:", err);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Submenu Error:", error);
 
     res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to fetch submenu",
     });
   }
 });
-<<<<<<< HEAD
 
-// Contact - INSERT
-app.post("/api/contactus", async (req, res) => {
-  console.log("📥 Contact request:", req.body);
+// ======================================================
+// Contact - GET
+// ======================================================
 
-=======
-// Get all contacts
 app.get("/api/contactus", async (req, res) => {
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
   try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        full_name,
+        email,
+        phone,
+        subject,
+        message
+      FROM public.contact_us
+      ORDER BY id DESC
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Get Contact Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch contact details",
+    });
+  }
+});
+
+// ======================================================
+// Contact - POST
+// ======================================================
+
+app.post("/api/contactus", async (req, res) => {
+  try {
+    console.log("📥 Contact request:", req.body);
+
     const {
       name,
       email,
@@ -97,12 +153,19 @@ app.get("/api/contactus", async (req, res) => {
       });
     }
 
-    // Insert into PostgreSQL
     const result = await pool.query(
-      `INSERT INTO public.contact_us
-        (full_name, email, phone, subject, message)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
+      `
+      INSERT INTO public.contact_us
+      (
+        full_name,
+        email,
+        phone,
+        subject,
+        message
+      )
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *
+      `,
       [
         name,
         email,
@@ -114,84 +177,30 @@ app.get("/api/contactus", async (req, res) => {
 
     console.log("✅ Contact inserted:", result.rows[0]);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Contact form submitted successfully.",
       data: result.rows[0],
     });
-  } catch (err) {
-    console.error("❌ Contact API Error:", err);
+  } catch (error) {
+    console.error("❌ Contact API Error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to submit contact form.",
-      error: err.message,
-    });
-  }
-});
-<<<<<<< HEAD
-
-// Get contacts
-app.get("/api/contactus", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT *
-      FROM public.contact_us
-      ORDER BY id DESC
-    `);
-
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error("Get Contact Error:", err);
-
-    res.status(500).json({
-      success: false,
-      message: err.message,
     });
   }
 });
 
-=======
-//Save data in ContactUs
-app.post("/api/contactus", async (req, res) => {
-  try {
-    const {
-      name,
-      email,
-      phone,
-      subject,
-      message,
-    } = req.body;
-
-    const result = await pool.query(
-      `INSERT INTO contact_us
-       (full_name, email, phone, subject, message)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
-      [name, email, phone, subject, message]
-    );
-
-    res.status(201).json({
-      success: true,
-      message: "Contact form submitted successfully",
-      data: result.rows[0],
-    });
-
-  } catch (error) {
-    console.error("Insert Error:", error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to submit contact form",
-    });
-  }
-});
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
+// ======================================================
 // Login API
+// ======================================================
+
 app.post("/api/users", async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    // Validation
     if (!username || !password) {
       return res.status(400).json({
         success: false,
@@ -200,19 +209,22 @@ app.post("/api/users", async (req, res) => {
     }
 
     const result = await pool.query(
-      `SELECT
-          id,
-          full_name,
-          username,
-          email,
-          role
-       FROM public.users
-       WHERE username = $1
-       AND password = $2
-       AND is_active = true`,
+      `
+      SELECT
+        id,
+        full_name,
+        username,
+        email,
+        role
+      FROM public.users
+      WHERE username = $1
+        AND password = $2
+        AND is_active = true
+      `,
       [username, password]
     );
 
+    // User not found
     if (result.rows.length === 0) {
       return res.status(401).json({
         success: false,
@@ -220,24 +232,39 @@ app.post("/api/users", async (req, res) => {
       });
     }
 
+    // Login successful
     return res.status(200).json({
       success: true,
       message: "Login Successful",
       user: result.rows[0],
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("Login Error:", error);
 
     return res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Something went wrong during login",
     });
   }
 });
 
+// ======================================================
+// 404 Route
+// ======================================================
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "API route not found",
+  });
+});
+
+// ======================================================
 // Server
+// ======================================================
+
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
