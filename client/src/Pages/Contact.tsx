@@ -349,7 +349,7 @@ const Contact: React.FC = () => {
                   <div
                     className="
                       group/item
-                      mb-7
+                      mb-5
                       flex
                       gap-4
                       rounded-xl
@@ -441,7 +441,7 @@ const Contact: React.FC = () => {
                       </h3>
 
                       <p className="mt-1 text-sm text-blue-100">
-                        +91 98765 43210
+                        +91 98536 92955
                       </p>
                     </div>
 
@@ -491,7 +491,7 @@ const Contact: React.FC = () => {
                       </h3>
 
                       <p className="mt-1 text-sm text-blue-100">
-                        info@cellexaenergy.com
+                        Hr@celexaenergy.com
                       </p>
                     </div>
 

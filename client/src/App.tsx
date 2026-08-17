@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Home from "./Pages/Home";
 import Contact from "./Pages/Contact";
 import About from "./Pages/About";
-import Home from "./Pages/Home";
 import OurCompany from "./Pages/OurCompany";
 import Services from "./Pages/Services";
 import Leadership from './Pages/Leadership';
@@ -18,6 +18,7 @@ import Blogs from "./Pages/Blogs";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import TermsConditions from "./Pages/TermsConditions";
 import Careers from "./Pages/Careers";
+import NotFound from "./Pages/NotFound";
 import Login from "./Pages/Login";
 
 import "./App.css";
@@ -49,6 +50,7 @@ const App: React.FC = () => {
             <Route path="/terms_conditions" element={<TermsConditions />} />
             <Route path="/contact_messages" element={<ContactMessages />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 

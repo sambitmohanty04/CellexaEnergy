@@ -26,7 +26,7 @@ const Home: React.FC = () => {
           {/* Hero Content */}
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
 
-            <p className="text-green-300 font-semibold uppercase tracking-widest mb-4">
+            <p className="text-blue-300 font-semibold uppercase tracking-widest mb-4">
               Powering a Sustainable Future
             </p>
 
