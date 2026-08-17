@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,13 +5,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import API_URL from "../service/api";
-=======
-import React, {useState} from 'react'
-import API_URL from '../service/api';
-
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
 
 const Contact: React.FC = () => {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,12 +17,8 @@ const Contact: React.FC = () => {
     message: "",
   });
 
-<<<<<<< HEAD
-  const navigate = useNavigate();
-
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // =====================================================
   // AOS INITIALIZATION
@@ -43,7 +34,6 @@ const Contact: React.FC = () => {
     AOS.refresh();
   }, []);
 
-
   // =====================================================
   // HANDLE INPUT CHANGE
   // =====================================================
@@ -51,7 +41,6 @@ const Contact: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -59,38 +48,24 @@ const Contact: React.FC = () => {
       [name]: value,
     }));
 
+    // Clear previous messages while typing
+    setSuccessMessage("");
+    setErrorMessage("");
   };
 
-
   // =====================================================
-  // SUBMIT FORM
+  // HANDLE FORM SUBMIT
   // =====================================================
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
-
-=======
-  const [successMessage, setSuccessMessage] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  // Handle input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Handle form submit
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
     e.preventDefault();
 
-    try {
+    setSuccessMessage("");
+    setErrorMessage("");
 
+    try {
       console.log("Sending data:", formData);
 
       const response = await API_URL.post(
@@ -98,25 +73,16 @@ const Contact: React.FC = () => {
         formData
       );
 
-      console.log(
-        "API Response:",
-        response.data
-      );
-
+      console.log("API Response:", response.data);
 
       if (response.data.success) {
-<<<<<<< HEAD
+        const message =
+          "Thank you! Your message has been submitted.";
 
-        toast.success(
-          "Thank you! Your message has been submitted."
-        );
+        setSuccessMessage(message);
 
-=======
-        setSuccessMessage(
-          "Thank you! Your message has been submitted."
-        );
+        toast.success(message);
 
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
         // Clear form
         setFormData({
           name: "",
@@ -125,59 +91,30 @@ const Contact: React.FC = () => {
           subject: "",
           message: "",
         });
-
       } else {
-<<<<<<< HEAD
-
-        toast.error(
+        const message =
           response.data.message ||
-          "Something went wrong."
-        );
+          "Something went wrong.";
 
-=======
-        setErrorMessage(
-          response.data.message || "Something went wrong."
-        );
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
+        setErrorMessage(message);
+
+        toast.error(message);
       }
-
     } catch (error: any) {
-<<<<<<< HEAD
-
-      console.error(
-        "Contact API Error:",
-        error.response?.data ||
-        error.message
-=======
       console.error("Contact form error:", error);
 
-      setErrorMessage(
-        error.response?.data?.message ||
-          "Unable to submit your message. Please try again."
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
-      );
+      const message =
+        error?.response?.data?.message ||
+        "Unable to submit your message. Please try again.";
 
-      toast.error(
-        error.response?.data?.message ||
-        "Unable to submit your message. Please try again."
-      );
+      setErrorMessage(message);
 
+      toast.error(message);
     }
-<<<<<<< HEAD
-
-  };
-
-
-  return (
-=======
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen" >
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
-
-    <div className="bg-slate-50">
-
+    <div className="min-h-screen bg-slate-50">
 
       {/* =====================================================
           PAGE HEADER
@@ -185,9 +122,7 @@ const Contact: React.FC = () => {
 
       <section className="relative overflow-hidden bg-blue-950 py-10">
 
-
         {/* Background Circle 1 */}
-
         <div
           className="
             absolute
@@ -202,9 +137,7 @@ const Contact: React.FC = () => {
           "
         />
 
-
         {/* Background Circle 2 */}
-
         <div
           className="
             absolute
@@ -219,9 +152,7 @@ const Contact: React.FC = () => {
           "
         />
 
-
-        {/* Small Floating Circle */}
-
+        {/* Floating Circle */}
         <div
           className="
             absolute
@@ -235,9 +166,7 @@ const Contact: React.FC = () => {
           "
         />
 
-
-        {/* Small Floating Circle */}
-
+        {/* Floating Circle */}
         <div
           className="
             absolute
@@ -251,58 +180,49 @@ const Contact: React.FC = () => {
           "
         />
 
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-
+        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
 
           {/* Section Label */}
-
           <div
             data-aos="fade-down"
             data-aos-duration="900"
-            className="flex items-center justify-center gap-3 mb-5"
+            className="mb-5 flex items-center justify-center gap-3"
           >
+            <span className="h-[2px] w-10 bg-blue-400" />
 
-            <span className="w-10 h-[2px] bg-blue-400" />
-
-            <p className="!mb-0 text-blue-300 text-xs font-bold uppercase tracking-[0.2em]">
+            <p className="!mb-0 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
               Get In Touch
             </p>
 
-            <span className="w-10 h-[2px] bg-blue-400" />
-
+            <span className="h-[2px] w-10 bg-blue-400" />
           </div>
 
-
           {/* Heading */}
-
           <h1
             data-aos="fade-up"
             data-aos-duration="1000"
             data-aos-delay="150"
             className="
+              mb-5
               text-4xl
-              md:text-5xl
               font-bold
               !text-white
-              mb-5
+              md:text-5xl
             "
           >
             Contact Us
           </h1>
 
-
           {/* Description */}
-
           <p
             data-aos="fade-up"
             data-aos-duration="900"
             data-aos-delay="300"
             className="
               mx-auto
-              text-blue-100
               text-sm
               leading-7
+              text-blue-100
             "
           >
             Have a question or need assistance? We would love to hear
@@ -310,9 +230,7 @@ const Contact: React.FC = () => {
           </p>
 
         </div>
-
       </section>
-
 
 
       {/* =====================================================
@@ -321,9 +239,7 @@ const Contact: React.FC = () => {
 
       <section className="relative overflow-hidden py-16">
 
-
         {/* Background Decoration */}
-
         <div
           className="
             absolute
@@ -336,7 +252,6 @@ const Contact: React.FC = () => {
             blur-3xl
           "
         />
-
 
         <div
           className="
@@ -351,12 +266,9 @@ const Contact: React.FC = () => {
           "
         />
 
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
             {/* =================================================
                 CONTACT INFORMATION
@@ -373,28 +285,24 @@ const Contact: React.FC = () => {
                 className="
                   group
                   relative
+                  h-full
                   overflow-hidden
+                  rounded-3xl
                   bg-gradient-to-br
                   from-blue-950
                   via-blue-900
                   to-blue-800
-                  text-white
-                  rounded-3xl
                   p-8
-                  h-full
+                  text-white
                   shadow-xl
-
                   transition-all
                   duration-700
-
                   hover:-translate-y-2
                   hover:shadow-2xl
                 "
               >
 
-
                 {/* Decorative Circle */}
-
                 <div
                   className="
                     absolute
@@ -404,17 +312,13 @@ const Contact: React.FC = () => {
                     w-56
                     rounded-full
                     bg-blue-500/20
-
                     transition-all
                     duration-1000
-
                     group-hover:scale-125
                   "
                 />
 
-
                 {/* Decorative Circle */}
-
                 <div
                   className="
                     absolute
@@ -428,20 +332,16 @@ const Contact: React.FC = () => {
                   "
                 />
 
-
                 <div className="relative z-10">
 
-
-                  <h2 className="text-2xl font-bold mb-4">
+                  <h2 className="mb-4 text-2xl font-bold">
                     Get In Touch
                   </h2>
 
-
-                  <p className="text-blue-100 !mb-8 text-sm leading-7">
+                  <p className="!mb-8 text-sm leading-7 text-blue-100">
                     We are here to help and answer any questions you may have.
                     Feel free to reach out to us.
                   </p>
-
 
 
                   {/* ================= ADDRESS ================= */}
@@ -449,225 +349,53 @@ const Contact: React.FC = () => {
                   <div
                     className="
                       group/item
+                      mb-7
                       flex
                       gap-4
-                      mb-7
-                      p-3
                       rounded-xl
-
+                      p-3
                       transition-all
                       duration-500
-
-<<<<<<< HEAD
-                      hover:bg-white/10
                       hover:translate-x-2
+                      hover:bg-white/10
                     "
-=======
-                  <p className="text-blue-100 mt-1">
-                    info@cellexaenergy.com
-                  </p>
-                </div>
-              </div>
-
-              {/* Working Hours */}
-              <div className="flex gap-4">
-                <div className="text-2xl">🕒</div>
-
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    Working Hours
-                  </h3>
-
-                  <p className="text-blue-100 mt-1">
-                    Monday - Friday
-                    <br />
-                    9:00 AM - 6:00 PM
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-
-            <div className="bg-white rounded-2xl shadow-md p-8">
-
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                Send Us a Message
-              </h2>
-
-              <p className="text-gray-500 mb-10">
-                Fill in the form below and our team will get back to you.
-              </p>
-
-              {/* Success */}
-              {/* {successMessage && (
-                <div className="mb-6 p-4 rounded-lg bg-green-100 text-green-700">
-                  {successMessage}
-                </div>
-              )} */}
-
-              {/* Error */}
-              {/* {errorMessage && (
-                <div className="mb-6 p-4 rounded-lg bg-red-100 text-red-700">
-                  {errorMessage}
-                </div>
-              )} */}
-              {successMessage && (
-                <div className="mb-6 p-4 rounded-lg bg-green-100 border border-green-300 text-green-700">
-                  {successMessage}
-                </div>
-              )}
-
-              {errorMessage && (
-                <div className="mb-6 p-4 rounded-lg bg-red-100 border border-red-300 text-red-700">
-                  {errorMessage}
-                </div>
-              )}
-              <form className='mt-5' onSubmit={handleSubmit}>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                  {/* Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-
-                    <input
-                      type="text"
-                      name="name"
-                       value={formData.name}
-                       onChange={handleChange}
-                      required
-                      placeholder="Enter your name"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-
-                    <input
-                      type="email"
-                      name="email"
-                       value={formData.email}
-                      onChange={handleChange}
-                      required
-                      placeholder="Enter your email"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  {/* Phone */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                       onChange={handleChange}
-                      placeholder="Enter phone number"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  {/* Subject */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject *
-                    </label>
-
-                    <input
-                      type="text"
-                      name="subject"
-                       value={formData.subject}
-                       onChange={handleChange}
-                      required
-                      placeholder="Enter subject"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                </div>
-
-                {/* Message */}
-                <div className="mt-6">
-
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
-                  </label>
-
-                  <textarea
-                    name="message"
-                     value={formData.message}
-                     onChange={handleChange}
-                    required
-                    rows={6}
-                    placeholder="Write your message..."
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                  />
-
-                </div>
-
-                {/* Submit */}
-                <div className="mt-6">
-
-                  <button
-                    type="submit"
-                    className="bg-blue-900 hover:bg-blue-800 text-white font-semibold px-8 py-3 rounded-lg transition duration-300"
->>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
                   >
 
                     <div
                       className="
-                        shrink-0
-                        w-11
-                        h-11
-                        rounded-xl
-                        bg-white/10
                         flex
+                        h-11
+                        w-11
+                        shrink-0
                         items-center
                         justify-center
+                        rounded-xl
+                        bg-white/10
                         text-xl
-
                         transition-all
                         duration-500
-
-                        group-hover/item:bg-white/20
                         group-hover/item:scale-110
+                        group-hover/item:bg-white/20
                       "
                     >
                       📍
                     </div>
 
-
                     <div>
-
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="text-lg font-semibold">
                         Address
                       </h3>
 
-                      <p className="text-blue-100 mt-1 text-sm leading-6">
+                      <p className="mt-1 text-sm leading-6 text-blue-100">
                         Cellexa Energy Pvt. Ltd.
                         <br />
                         Bangalore, Karnataka
                         <br />
                         India
                       </p>
-
                     </div>
 
                   </div>
-
 
 
                   {/* ================= PHONE ================= */}
@@ -675,57 +403,49 @@ const Contact: React.FC = () => {
                   <div
                     className="
                       group/item
+                      mb-7
                       flex
                       gap-4
-                      mb-7
-                      p-3
                       rounded-xl
-
+                      p-3
                       transition-all
                       duration-500
-
-                      hover:bg-white/10
                       hover:translate-x-2
+                      hover:bg-white/10
                     "
                   >
 
                     <div
                       className="
-                        shrink-0
-                        w-11
-                        h-11
-                        rounded-xl
-                        bg-white/10
                         flex
+                        h-11
+                        w-11
+                        shrink-0
                         items-center
                         justify-center
+                        rounded-xl
+                        bg-white/10
                         text-xl
-
                         transition-all
                         duration-500
-
-                        group-hover/item:bg-white/20
                         group-hover/item:scale-110
+                        group-hover/item:bg-white/20
                       "
                     >
                       📞
                     </div>
 
-
                     <div>
-
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="text-lg font-semibold">
                         Phone
                       </h3>
 
-                      <p className="text-blue-100 text-sm mt-1">
+                      <p className="mt-1 text-sm text-blue-100">
                         +91 98765 43210
                       </p>
-
                     </div>
 
                   </div>
-
 
 
                   {/* ================= EMAIL ================= */}
@@ -733,57 +453,49 @@ const Contact: React.FC = () => {
                   <div
                     className="
                       group/item
+                      mb-7
                       flex
                       gap-4
-                      mb-7
-                      p-3
                       rounded-xl
-
+                      p-3
                       transition-all
                       duration-500
-
-                      hover:bg-white/10
                       hover:translate-x-2
+                      hover:bg-white/10
                     "
                   >
 
                     <div
                       className="
-                        shrink-0
-                        w-11
-                        h-11
-                        rounded-xl
-                        bg-white/10
                         flex
+                        h-11
+                        w-11
+                        shrink-0
                         items-center
                         justify-center
+                        rounded-xl
+                        bg-white/10
                         text-xl
-
                         transition-all
                         duration-500
-
-                        group-hover/item:bg-white/20
                         group-hover/item:scale-110
+                        group-hover/item:bg-white/20
                       "
                     >
                       ✉️
                     </div>
 
-
                     <div>
-
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="text-lg font-semibold">
                         Email
                       </h3>
 
-                      <p className="text-blue-100 mt-1 text-sm">
+                      <p className="mt-1 text-sm text-blue-100">
                         info@cellexaenergy.com
                       </p>
-
                     </div>
 
                   </div>
-
 
 
                   {/* ================= WORKING HOURS ================= */}
@@ -793,63 +505,52 @@ const Contact: React.FC = () => {
                       group/item
                       flex
                       gap-4
-                      p-3
                       rounded-xl
-
+                      p-3
                       transition-all
                       duration-500
-
-                      hover:bg-white/10
                       hover:translate-x-2
+                      hover:bg-white/10
                     "
                   >
 
                     <div
                       className="
-                        shrink-0
-                        w-11
-                        h-11
-                        rounded-xl
-                        bg-white/10
                         flex
+                        h-11
+                        w-11
+                        shrink-0
                         items-center
                         justify-center
+                        rounded-xl
+                        bg-white/10
                         text-xl
-
                         transition-all
                         duration-500
-
-                        group-hover/item:bg-white/20
                         group-hover/item:scale-110
+                        group-hover/item:bg-white/20
                       "
                     >
                       🕒
                     </div>
 
-
                     <div>
-
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="text-lg font-semibold">
                         Working Hours
                       </h3>
 
-                      <p className="text-blue-100 mt-1 text-sm leading-6">
+                      <p className="mt-1 text-sm leading-6 text-blue-100">
                         Monday - Friday
                         <br />
                         9:00 AM - 6:00 PM
                       </p>
-
                     </div>
 
                   </div>
 
-
                 </div>
-
               </div>
-
             </div>
-
 
 
             {/* =================================================
@@ -868,118 +569,105 @@ const Contact: React.FC = () => {
                   group
                   relative
                   overflow-hidden
-                  bg-white
                   rounded-3xl
-                  shadow-lg
-                  p-8
-                  lg:p-10
                   border
                   border-slate-100
-
+                  bg-white
+                  p-8
+                  shadow-lg
                   transition-all
                   duration-700
-
                   hover:shadow-2xl
+                  lg:p-10
                 "
               >
 
-
                 {/* Top Animated Line */}
-
                 <div
                   className="
                     absolute
-                    top-0
                     left-0
                     right-0
+                    top-0
                     h-1
-
+                    origin-left
+                    scale-x-0
                     bg-gradient-to-r
                     from-blue-600
                     via-cyan-500
                     to-blue-500
-
-                    origin-left
-                    scale-x-0
-                    group-hover:scale-x-100
-
                     transition-transform
                     duration-1000
+                    group-hover:scale-x-100
                   "
                 />
 
-
-                <h2 className="text-2xl font-bold !text-blue-800 !mb-2">
+                <h2 className="!mb-2 text-2xl font-bold !text-blue-800">
                   Send Us a Message
                 </h2>
 
-
-                <p className="text-gray-500 mb-10 text-sm">
+                <p className="mb-10 text-sm text-gray-500">
                   Fill in the form below and our team will get back to you.
                 </p>
 
 
-                {/* Success */}
+                {/* Success Message */}
 
                 {successMessage && (
-
                   <div
                     data-aos="fade-down"
                     className="
                       mb-6
-                      p-4
                       rounded-xl
-                      bg-green-50
                       border
                       border-green-200
-                      text-green-700
+                      bg-green-50
+                      p-4
                       text-sm
+                      text-green-700
                     "
                   >
                     {successMessage}
                   </div>
-
                 )}
 
 
-                {/* Error */}
+                {/* Error Message */}
 
                 {errorMessage && (
-
                   <div
                     data-aos="fade-down"
                     className="
                       mb-6
-                      p-4
                       rounded-xl
-                      bg-red-50
                       border
                       border-red-200
-                      text-red-700
+                      bg-red-50
+                      p-4
                       text-sm
+                      text-red-700
                     "
                   >
                     {errorMessage}
                   </div>
-
                 )}
 
 
+                {/* FORM */}
 
                 <form
                   className="mt-5"
                   onSubmit={handleSubmit}
                 >
 
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 
 
                     {/* NAME */}
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Full Name *
                       </label>
 
@@ -992,35 +680,31 @@ const Contact: React.FC = () => {
                         placeholder="Enter your name"
                         className="
                           w-full
+                          rounded-xl
                           border
                           border-gray-200
-                          rounded-xl
+                          bg-slate-50
                           px-4
                           py-3
                           text-sm
-
-                          bg-slate-50
-
-                          focus:outline-none
-                          focus:bg-white
-                          focus:border-blue-500
-                          focus:ring-4
-                          focus:ring-blue-100
-
                           transition-all
                           duration-300
+                          focus:border-blue-500
+                          focus:bg-white
+                          focus:outline-none
+                          focus:ring-4
+                          focus:ring-blue-100
                         "
                       />
 
                     </div>
 
 
-
                     {/* EMAIL */}
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Email Address *
                       </label>
 
@@ -1033,35 +717,31 @@ const Contact: React.FC = () => {
                         placeholder="Enter your email"
                         className="
                           w-full
+                          rounded-xl
                           border
                           border-gray-200
-                          rounded-xl
+                          bg-slate-50
                           px-4
                           py-3
                           text-sm
-
-                          bg-slate-50
-
-                          focus:outline-none
-                          focus:bg-white
-                          focus:border-blue-500
-                          focus:ring-4
-                          focus:ring-blue-100
-
                           transition-all
                           duration-300
+                          focus:border-blue-500
+                          focus:bg-white
+                          focus:outline-none
+                          focus:ring-4
+                          focus:ring-blue-100
                         "
                       />
 
                     </div>
 
 
-
                     {/* PHONE */}
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Phone Number
                       </label>
 
@@ -1073,35 +753,31 @@ const Contact: React.FC = () => {
                         placeholder="Enter phone number"
                         className="
                           w-full
+                          rounded-xl
                           border
                           border-gray-200
-                          rounded-xl
+                          bg-slate-50
                           px-4
                           py-3
                           text-sm
-
-                          bg-slate-50
-
-                          focus:outline-none
-                          focus:bg-white
-                          focus:border-blue-500
-                          focus:ring-4
-                          focus:ring-blue-100
-
                           transition-all
                           duration-300
+                          focus:border-blue-500
+                          focus:bg-white
+                          focus:outline-none
+                          focus:ring-4
+                          focus:ring-blue-100
                         "
                       />
 
                     </div>
 
 
-
                     {/* SUBJECT */}
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Subject *
                       </label>
 
@@ -1114,23 +790,20 @@ const Contact: React.FC = () => {
                         placeholder="Enter subject"
                         className="
                           w-full
+                          rounded-xl
                           border
                           border-gray-200
-                          rounded-xl
+                          bg-slate-50
                           px-4
                           py-3
                           text-sm
-
-                          bg-slate-50
-
-                          focus:outline-none
-                          focus:bg-white
-                          focus:border-blue-500
-                          focus:ring-4
-                          focus:ring-blue-100
-
                           transition-all
                           duration-300
+                          focus:border-blue-500
+                          focus:bg-white
+                          focus:outline-none
+                          focus:ring-4
+                          focus:ring-blue-100
                         "
                       />
 
@@ -1139,12 +812,11 @@ const Contact: React.FC = () => {
                   </div>
 
 
-
                   {/* MESSAGE */}
 
                   <div className="mt-6">
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
                       Message *
                     </label>
 
@@ -1157,30 +829,25 @@ const Contact: React.FC = () => {
                       placeholder="Write your message..."
                       className="
                         w-full
+                        resize-none
+                        rounded-xl
                         border
                         border-gray-200
-                        rounded-xl
+                        bg-slate-50
                         px-4
                         py-3
                         text-sm
-
-                        bg-slate-50
-
-                        focus:outline-none
-                        focus:bg-white
-                        focus:border-blue-500
-                        focus:ring-4
-                        focus:ring-blue-100
-
                         transition-all
                         duration-300
-
-                        resize-none
+                        focus:border-blue-500
+                        focus:bg-white
+                        focus:outline-none
+                        focus:ring-4
+                        focus:ring-blue-100
                       "
                     />
 
                   </div>
-
 
 
                   {/* SUBMIT BUTTON */}
@@ -1193,21 +860,16 @@ const Contact: React.FC = () => {
                         group/btn
                         relative
                         overflow-hidden
-
+                        rounded-xl
                         bg-blue-900
-                        hover:bg-blue-800
-
-                        text-white
-                        font-semibold
-
                         px-8
                         py-3
-                        rounded-xl
-
+                        font-semibold
+                        text-white
                         transition-all
                         duration-500
-
                         hover:-translate-y-1
+                        hover:bg-blue-800
                         hover:shadow-xl
                       "
                     >
@@ -1221,36 +883,28 @@ const Contact: React.FC = () => {
                           gap-2
                         "
                       >
-
                         Send Message
 
                         <span
                           className="
                             transition-transform
                             duration-500
-
                             group-hover/btn:translate-x-2
                           "
                         >
                           →
                         </span>
-
                       </span>
 
-
                       {/* Button Shine */}
-
                       <span
                         className="
                           absolute
                           inset-0
                           -translate-x-full
-
                           bg-white/10
-
                           transition-transform
                           duration-700
-
                           group-hover/btn:translate-x-full
                         "
                       />
@@ -1259,7 +913,6 @@ const Contact: React.FC = () => {
 
                   </div>
 
-
                 </form>
 
               </div>
@@ -1267,18 +920,15 @@ const Contact: React.FC = () => {
             </div>
 
           </div>
-
         </div>
-
       </section>
-
 
 
       {/* =====================================================
           MAP SECTION
       ====================================================== */}
 
-      <section className="relative max-w-7xl mx-auto px-6 pb-16">
+      <section className="relative mx-auto max-w-7xl px-6 pb-16">
 
         <div
           data-aos="fade-up"
@@ -1286,20 +936,17 @@ const Contact: React.FC = () => {
           data-aos-delay="200"
           className="
             group
-            bg-white
-            rounded-3xl
-            shadow-lg
             overflow-hidden
+            rounded-3xl
             border
             border-slate-100
-
+            bg-white
+            shadow-lg
             transition-all
             duration-700
-
             hover:shadow-2xl
           "
         >
-
 
           {/* Map Header */}
 
@@ -1309,25 +956,22 @@ const Contact: React.FC = () => {
 
               <div
                 className="
-                  w-11
-                  h-11
-                  rounded-xl
-                  bg-blue-100
                   flex
+                  h-11
+                  w-11
                   items-center
                   justify-center
+                  rounded-xl
+                  bg-blue-100
                   text-xl
-
                   transition-all
                   duration-500
-
-                  group-hover:bg-blue-600
                   group-hover:scale-110
+                  group-hover:bg-blue-600
                 "
               >
                 📍
               </div>
-
 
               <div>
 
@@ -1335,7 +979,7 @@ const Contact: React.FC = () => {
                   Find Us
                 </h2>
 
-                <p className="text-gray-500 mt-1 text-sm">
+                <p className="mt-1 text-sm text-gray-500">
                   Visit our office in Bangalore.
                 </p>
 
@@ -1346,27 +990,22 @@ const Contact: React.FC = () => {
           </div>
 
 
-
-          {/* MAP */}
+          {/* MAP PLACEHOLDER */}
 
           <div
             className="
+              relative
+              flex
               h-80
-
+              items-center
+              justify-center
+              overflow-hidden
               bg-gradient-to-br
               from-blue-50
               via-slate-100
               to-cyan-50
-
-              flex
-              items-center
-              justify-center
-
-              relative
-              overflow-hidden
             "
           >
-
 
             {/* Background Decoration */}
 
@@ -1375,54 +1014,47 @@ const Contact: React.FC = () => {
                 absolute
                 -left-10
                 top-10
-                w-40
                 h-40
+                w-40
                 rounded-full
                 bg-blue-200/30
                 blur-2xl
               "
             />
 
-
             <div
               className="
                 absolute
                 -right-10
                 bottom-5
-                w-48
                 h-48
+                w-48
                 rounded-full
                 bg-cyan-200/30
                 blur-2xl
               "
             />
 
-
             <div className="relative z-10 text-center">
-
 
               <div
                 className="
-                  text-5xl
                   mb-4
-
+                  text-5xl
                   transition-transform
                   duration-700
-
-                  group-hover:scale-110
                   group-hover:-translate-y-2
+                  group-hover:scale-110
                 "
               >
                 📍
               </div>
 
-
               <p className="font-semibold text-gray-700">
                 Bangalore, Karnataka
               </p>
 
-
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="mt-1 text-sm text-gray-500">
                 Google Maps can be embedded here
               </p>
 
@@ -1434,9 +1066,7 @@ const Contact: React.FC = () => {
 
       </section>
 
-
     </div>
-
   );
 };
 
