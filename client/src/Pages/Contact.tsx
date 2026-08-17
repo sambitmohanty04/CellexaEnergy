@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -5,6 +6,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import API_URL from "../service/api";
+=======
+import React, {useState} from 'react'
+import API_URL from '../service/api';
+
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
 
 const Contact: React.FC = () => {
 
@@ -16,6 +22,7 @@ const Contact: React.FC = () => {
     message: "",
   });
 
+<<<<<<< HEAD
   const navigate = useNavigate();
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -63,6 +70,23 @@ const Contact: React.FC = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
 
+=======
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // Handle input changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
     e.preventDefault();
 
     try {
@@ -81,11 +105,18 @@ const Contact: React.FC = () => {
 
 
       if (response.data.success) {
+<<<<<<< HEAD
 
         toast.success(
           "Thank you! Your message has been submitted."
         );
 
+=======
+        setSuccessMessage(
+          "Thank you! Your message has been submitted."
+        );
+
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
         // Clear form
         setFormData({
           name: "",
@@ -96,20 +127,34 @@ const Contact: React.FC = () => {
         });
 
       } else {
+<<<<<<< HEAD
 
         toast.error(
           response.data.message ||
           "Something went wrong."
         );
 
+=======
+        setErrorMessage(
+          response.data.message || "Something went wrong."
+        );
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
       }
 
     } catch (error: any) {
+<<<<<<< HEAD
 
       console.error(
         "Contact API Error:",
         error.response?.data ||
         error.message
+=======
+      console.error("Contact form error:", error);
+
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Unable to submit your message. Please try again."
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
       );
 
       toast.error(
@@ -118,11 +163,18 @@ const Contact: React.FC = () => {
       );
 
     }
+<<<<<<< HEAD
 
   };
 
 
   return (
+=======
+  };
+
+  return (
+    <div className="bg-gray-50 min-h-screen" >
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
 
     <div className="bg-slate-50">
 
@@ -406,9 +458,173 @@ const Contact: React.FC = () => {
                       transition-all
                       duration-500
 
+<<<<<<< HEAD
                       hover:bg-white/10
                       hover:translate-x-2
                     "
+=======
+                  <p className="text-blue-100 mt-1">
+                    info@cellexaenergy.com
+                  </p>
+                </div>
+              </div>
+
+              {/* Working Hours */}
+              <div className="flex gap-4">
+                <div className="text-2xl">🕒</div>
+
+                <div>
+                  <h3 className="font-semibold text-lg">
+                    Working Hours
+                  </h3>
+
+                  <p className="text-blue-100 mt-1">
+                    Monday - Friday
+                    <br />
+                    9:00 AM - 6:00 PM
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="lg:col-span-2">
+
+            <div className="bg-white rounded-2xl shadow-md p-8">
+
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                Send Us a Message
+              </h2>
+
+              <p className="text-gray-500 mb-10">
+                Fill in the form below and our team will get back to you.
+              </p>
+
+              {/* Success */}
+              {/* {successMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-green-100 text-green-700">
+                  {successMessage}
+                </div>
+              )} */}
+
+              {/* Error */}
+              {/* {errorMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-red-100 text-red-700">
+                  {errorMessage}
+                </div>
+              )} */}
+              {successMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-green-100 border border-green-300 text-green-700">
+                  {successMessage}
+                </div>
+              )}
+
+              {errorMessage && (
+                <div className="mb-6 p-4 rounded-lg bg-red-100 border border-red-300 text-red-700">
+                  {errorMessage}
+                </div>
+              )}
+              <form className='mt-5' onSubmit={handleSubmit}>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  {/* Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name *
+                    </label>
+
+                    <input
+                      type="text"
+                      name="name"
+                       value={formData.name}
+                       onChange={handleChange}
+                      required
+                      placeholder="Enter your name"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+
+                    <input
+                      type="email"
+                      name="email"
+                       value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="Enter your email"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                       onChange={handleChange}
+                      placeholder="Enter phone number"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Subject */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Subject *
+                    </label>
+
+                    <input
+                      type="text"
+                      name="subject"
+                       value={formData.subject}
+                       onChange={handleChange}
+                      required
+                      placeholder="Enter subject"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                </div>
+
+                {/* Message */}
+                <div className="mt-6">
+
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message *
+                  </label>
+
+                  <textarea
+                    name="message"
+                     value={formData.message}
+                     onChange={handleChange}
+                    required
+                    rows={6}
+                    placeholder="Write your message..."
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  />
+
+                </div>
+
+                {/* Submit */}
+                <div className="mt-6">
+
+                  <button
+                    type="submit"
+                    className="bg-blue-900 hover:bg-blue-800 text-white font-semibold px-8 py-3 rounded-lg transition duration-300"
+>>>>>>> bdfecd7889487f286ededc661e6ddfd7b1a5d2a3
                   >
 
                     <div
