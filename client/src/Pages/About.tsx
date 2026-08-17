@@ -7,19 +7,33 @@ const About: React.FC = () => {
       <div className="bg-gray-50 min-h-screen">
 
         {/* Page Header */}
-        <section className="bg-blue-900 py-16">
-          <div className="max-w-7xl mx-auto px-6 text-center">
+        <section className="relative overflow-hidden py-10">
 
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          {/* Background Image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/images/energy-3.jpg')",
+            }}
+          />
+
+          {/* Black Overlay */}
+          <div className="absolute inset-0 bg-black/70" />
+
+          {/* Content */}
+          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+
+            <h1 className="text-4xl md:text-5xl font-bold !text-white mb-4">
               About Us
             </h1>
 
-            <p className="text-blue-100 text-lg max-w-3xl mx-auto">
+            <p className="text-blue-100 text-lg mx-auto">
               Powering a sustainable future through innovative and reliable
               energy solutions.
             </p>
 
           </div>
+
         </section>
 
         {/* Who We Are */}
@@ -30,7 +44,7 @@ const About: React.FC = () => {
             {/* Image */}
             <div>
               <img
-                src="/images/about-us.jpg"
+                src="/images/energy-2.jpg"
                 alt="About Cellexa Energy"
                 className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
               />
@@ -39,30 +53,61 @@ const About: React.FC = () => {
             {/* Content */}
             <div>
 
-              <div className="text-blue-700 font-semibold uppercase my-3 tracking-wide">
-                Who We Are
-              </div>
+              <div
+                  data-aos="fade-right"
+                  data-aos-duration="800"
+                  className="flex items-center gap-3 !mb-3"
+                >
+                  <span
+                    className="
+                    block
+                    w-10 h-[2px]
+                    bg-blue-600
+                    origin-left
+                    transition-all duration-500 ease-out
+                    hover:w-16
+                  "
+                  />
+
+                  <p
+                    data-aos="fade-left"
+                    data-aos-duration="700"
+                    data-aos-delay="250"
+                    className="
+                  text-blue-700
+                  text-xs
+                  font-bold
+                  uppercase
+                  tracking-[0.2em]
+                  transition-all
+                  duration-300
+                  hover:tracking-[0.25em]"
+                  >
+                    What We Do
+                  </p>
+                </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
                 Building a Cleaner & Sustainable Future
               </h2>
 
-              <p className="text-gray-600 leading-7 mb-5">
-                Cellexa Energy is committed to delivering innovative and
-                sustainable energy solutions that help businesses and
-                communities move towards a cleaner future.
+              <p className="text-gray-600 leading-7 mb-5 text-sm">
+                Cellexa Energy is committed to delivering innovative, reliable, and sustainable energy 
+                solutions that help businesses and communities transition towards a cleaner and more 
+                energy-efficient future.
               </p>
 
-              <p className="text-gray-600 leading-7 mb-5">
-                We focus on combining technology, innovation and
-                sustainability to develop reliable energy solutions that
-                create long-term value for our customers and the environment.
+              <p className="text-gray-600 leading-7 mb-5 text-sm">
+                We combine advanced technology, innovation, and sustainable practices to develop 
+                practical energy solutions that deliver long-term value for our customers while 
+                contributing positively to the environment.
               </p>
 
-              <p className="text-gray-600 leading-7">
-                Our team works with a strong commitment to quality,
-                efficiency and continuous improvement while helping shape
-                the future of energy.
+              <p className="text-gray-600 leading-7 text-sm">
+                From developing efficient energy solutions to supporting sustainable initiatives, our 
+                team focuses on quality, reliability, efficiency, and continuous improvement. Through 
+                responsible innovation and a customer-focused approach, we aim to play an active role 
+                in shaping a cleaner and more sustainable future.
               </p>
 
             </div>
@@ -78,8 +123,14 @@ const About: React.FC = () => {
 
             <div className="text-center mb-12">
 
-              <div className="mb-3 text-blue-700 font-semibold uppercase tracking-wide">
-                Our Purpose
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="w-12 h-[2px] bg-blue-500" />
+
+                <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                  Our Purpose
+                </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
               </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2">
@@ -90,46 +141,210 @@ const About: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-              {/* Mission */}
-              <div className="bg-blue-50 rounded-2xl p-8 border border-blue-100">
+  {/* Mission */}
+  <div
+    className="
+      group relative
+      bg-blue-50
+      rounded-2xl
+      p-8
+      border border-blue-100
+      overflow-hidden
+      transition-all duration-700 ease-out
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-blue-300
+    "
+  >
 
-                <div className="w-14 h-14 bg-blue-900 rounded-xl flex items-center justify-center text-white text-2xl mb-5">
-                  🎯
-                </div>
+    {/* Top Hover Line */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-blue-600 to-cyan-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
 
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  Our Mission
-                </h3>
+    {/* Icon */}
+    <div
+      className="
+    w-14 h-14
+    bg-blue-100
+    rounded-xl
+    flex items-center justify-center
+    text-blue-700 text-2xl
+    mb-5
+    transition-all duration-700 ease-out
+    group-hover:scale-110
+    group-hover:rotate-6
+    group-hover:bg-blue-200
+    group-hover:text-blue-800
+    group-hover:shadow-lg
+  "
+    >
+      🎯
+    </div>
 
-                <p className="text-gray-600 leading-7">
-                  To provide innovative, efficient and sustainable energy
-                  solutions that meet the evolving needs of our customers
-                  while contributing to a cleaner and greener planet.
-                </p>
+    {/* Title */}
+    <h3
+      className="
+        text-2xl font-bold text-gray-800 mb-4
+        transition-all duration-500
+        group-hover:text-blue-700
+        group-hover:translate-x-1
+      "
+    >
+      Our Mission
+    </h3>
 
-              </div>
+    {/* Description */}
+    <p
+      className="
+        text-gray-600 leading-7 text-sm
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      To provide innovative, efficient, and sustainable energy solutions that address the evolving 
+      needs of our customers while supporting a cleaner, greener, and more sustainable future.
+    </p>
+    <p
+      className="
+        text-gray-600 leading-7 text-sm
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      We are committed to combining advanced technology, responsible practices, and continuous innovation 
+      to deliver reliable solutions that create lasting value for our customers, communities, and the 
+      environment.
+    </p>
 
-              {/* Vision */}
-              <div className="bg-green-50 rounded-2xl p-8 border border-green-100">
+    {/* Hover Arrow */}
+    <div
+      className="
+        mt-5
+        text-blue-700 text-lg
+        opacity-0
+        translate-y-2
+        group-hover:opacity-100
+        group-hover:translate-y-0
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
 
-                <div className="w-14 h-14 bg-green-700 rounded-xl flex items-center justify-center text-white text-2xl mb-5">
-                  🌱
-                </div>
+  </div>
 
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  Our Vision
-                </h3>
 
-                <p className="text-gray-600 leading-7">
-                  To become a trusted leader in sustainable energy by
-                  embracing innovation, technology and responsible business
-                  practices for a better tomorrow.
-                </p>
+  {/* Vision */}
+  <div
+    className="
+      group relative
+      bg-green-50
+      rounded-2xl
+      p-8
+      border border-green-100
+      overflow-hidden
+      transition-all duration-700 ease-out
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-green-300
+    "
+  >
 
-              </div>
+    {/* Top Hover Line */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-green-600 to-emerald-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
 
-            </div>
+    {/* Icon */}
+    <div
+     className="
+    w-14 h-14
+    bg-green-100
+    rounded-xl
+    flex items-center justify-center
+    text-green-700 text-2xl
+    mb-5
+    transition-all duration-700 ease-out
+    group-hover:scale-110
+    group-hover:-rotate-6
+    group-hover:bg-green-200
+    group-hover:text-green-700
+    group-hover:shadow-lg
+  "
+    >
+      🌱
+    </div>
 
+    {/* Title */}
+    <h3
+      className="
+        text-2xl font-bold text-gray-800 mb-4
+        transition-all duration-500
+        group-hover:text-green-700
+        group-hover:translate-x-1
+      "
+    >
+      Our Vision
+    </h3>
+
+    {/* Description */}
+    <p
+      className="
+        text-gray-600 leading-7 text-sm
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      To become a trusted leader in sustainable energy solutions by embracing innovation, advanced 
+      technology, and responsible business practices that create lasting value for our customers, 
+      communities, and the environment.
+    </p>
+    <p
+      className="
+        text-gray-600 leading-7 text-sm
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      We envision a future where clean energy, smart technology, and sustainable practices work together 
+      to build a cleaner, more efficient, and resilient world for generations to come.
+    </p>
+
+    {/* Hover Arrow */}
+    <div
+      className="
+        mt-5
+        text-green-700 text-lg
+        opacity-0
+        translate-y-2
+        group-hover:opacity-100
+        group-hover:translate-y-0
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
+
+  </div>
+
+</div>
           </div>
 
         </section>
@@ -138,11 +353,15 @@ const About: React.FC = () => {
         <section className="max-w-7xl mx-auto px-6 py-16">
 
           <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="w-12 h-[2px] bg-blue-500" />
 
-            <div className="mb-3 text-blue-700 font-semibold uppercase tracking-wide">
-              Why Choose Us
+                <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                  Why Choose Us
+                </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
             </div>
-
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2">
               What Sets Us Apart
             </h2>
@@ -151,78 +370,408 @@ const About: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            {/* Card 1 */}
-            <div className="bg-white rounded-xl shadow-md p-7 text-center hover:shadow-xl transition">
+  {/* Card 1 - Innovation */}
+  <div
+    data-aos="fade-up"
+    data-aos-delay="100"
+    className="
+      group relative
+      bg-white
+      rounded-xl
+      shadow-md
+      p-7
+      text-center
+      overflow-hidden
+      border border-gray-100
 
-              <div className="text-4xl mb-4">
-                ⚡
-              </div>
+      transition-all
+      duration-700
+      ease-out
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                Innovation
-              </h3>
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-blue-200
+    "
+  >
 
-              <p className="text-gray-600">
-                We continuously explore new technologies and innovative
-                approaches to energy solutions.
-              </p>
+    {/* Top Gradient */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-blue-500 to-cyan-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
 
-            </div>
+    {/* Icon */}
+    <div
+      className="
+        w-16 h-16
+        mx-auto
+        mb-5
+        rounded-2xl
+        bg-blue-50
+        flex items-center justify-center
+        text-4xl
 
-            {/* Card 2 */}
-            <div className="bg-white rounded-xl shadow-md p-7 text-center hover:shadow-xl transition">
+        transition-all
+        duration-700
+        ease-out
 
-              <div className="text-4xl mb-4">
-                🌍
-              </div>
+        group-hover:scale-110
+        group-hover:rotate-6
+        group-hover:bg-blue-100
+        group-hover:shadow-md
+      "
+    >
+      ⚡
+    </div>
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                Sustainability
-              </h3>
+    <h3
+      className="
+        text-xl font-bold text-gray-800 mb-3
+        transition-all duration-500
+        group-hover:text-blue-600
+        group-hover:-translate-y-1
+      "
+    >
+      Innovation
+    </h3>
 
-              <p className="text-gray-600">
-                Sustainability is at the heart of everything we do.
-              </p>
+    <p
+      className="
+        text-gray-600 text-sm leading-6
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      We continuously explore new technologies and innovative
+      approaches to energy solutions.
+    </p>
 
-            </div>
+    {/* Arrow */}
+    <div
+      className="
+        mt-4
+        text-blue-600
+        opacity-0
+        translate-y-2
 
-            {/* Card 3 */}
-            <div className="bg-white rounded-xl shadow-md p-7 text-center hover:shadow-xl transition">
+        group-hover:opacity-100
+        group-hover:translate-y-0
 
-              <div className="text-4xl mb-4">
-                ⭐
-              </div>
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                Quality
-              </h3>
+  </div>
 
-              <p className="text-gray-600 mb-3">
-                We maintain high standards of quality and reliability in
-                our solutions.
-              </p>
 
-            </div>
+  {/* Card 2 - Sustainability */}
+  <div
+    data-aos="fade-up"
+    data-aos-delay="200"
+    className="
+      group relative
+      bg-white
+      rounded-xl
+      shadow-md
+      p-7
+      text-center
+      overflow-hidden
+      border border-gray-100
 
-            {/* Card 4 */}
-            <div className="bg-white rounded-xl shadow-md p-7 text-center hover:shadow-xl transition">
+      transition-all
+      duration-700
+      ease-out
 
-              <div className="text-4xl mb-4">
-                🤝
-              </div>
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-green-200
+    "
+  >
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                Customer Focus
-              </h3>
+    {/* Top Gradient */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-green-500 to-emerald-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
 
-              <p className="text-gray-600">
-                We build strong relationships by understanding and
-                responding to our customers' needs.
-              </p>
+    {/* Icon */}
+    <div
+      className="
+        w-16 h-16
+        mx-auto
+        mb-5
+        rounded-2xl
+        bg-green-50
+        flex items-center justify-center
+        text-4xl
 
-            </div>
+        transition-all
+        duration-700
+        ease-out
 
-          </div>
+        group-hover:scale-110
+        group-hover:-rotate-6
+        group-hover:bg-green-100
+        group-hover:shadow-md
+      "
+    >
+      🌍
+    </div>
+
+    <h3
+      className="
+        text-xl font-bold text-gray-800 mb-3
+        transition-all duration-500
+        group-hover:text-green-600
+        group-hover:-translate-y-1
+      "
+    >
+      Sustainability
+    </h3>
+
+    <p
+      className="
+        text-gray-600 text-sm leading-6
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      Sustainability is at the heart of everything we do.
+    </p>
+
+    <div
+      className="
+        mt-4
+        text-green-600
+        opacity-0
+        translate-y-2
+        group-hover:opacity-100
+        group-hover:translate-y-0
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
+
+  </div>
+
+
+  {/* Card 3 - Quality */}
+  <div
+    data-aos="fade-up"
+    data-aos-delay="300"
+    className="
+      group relative
+      bg-white
+      rounded-xl
+      shadow-md
+      p-7
+      text-center
+      overflow-hidden
+      border border-gray-100
+
+      transition-all
+      duration-700
+      ease-out
+
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-orange-200
+    "
+  >
+
+    {/* Top Gradient */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-orange-500 to-yellow-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
+
+    {/* Icon */}
+    <div
+      className="
+        w-16 h-16
+        mx-auto
+        mb-5
+        rounded-2xl
+        bg-orange-50
+        flex items-center justify-center
+        text-4xl
+
+        transition-all
+        duration-700
+        ease-out
+
+        group-hover:scale-110
+        group-hover:rotate-6
+        group-hover:bg-orange-100
+        group-hover:shadow-md
+      "
+    >
+      ⭐
+    </div>
+
+    <h3
+      className="
+        text-xl font-bold text-gray-800 mb-3
+        transition-all duration-500
+        group-hover:text-orange-600
+        group-hover:-translate-y-1
+      "
+    >
+      Quality
+    </h3>
+
+    <p
+      className="
+        text-gray-600 text-sm leading-6
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      We maintain high standards of quality and reliability in
+      our solutions.
+    </p>
+
+    <div
+      className="
+        mt-4
+        text-orange-600
+        opacity-0
+        translate-y-2
+        group-hover:opacity-100
+        group-hover:translate-y-0
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
+
+  </div>
+
+
+  {/* Card 4 - Customer Focus */}
+  <div
+    data-aos="fade-up"
+    data-aos-delay="400"
+    className="
+      group relative
+      bg-white
+      rounded-xl
+      shadow-md
+      p-7
+      text-center
+      overflow-hidden
+      border border-gray-100
+
+      transition-all
+      duration-700
+      ease-out
+
+      hover:-translate-y-3
+      hover:shadow-2xl
+      hover:border-purple-200
+    "
+  >
+
+    {/* Top Gradient */}
+    <div
+      className="
+        absolute top-0 left-0 right-0
+        h-1
+        bg-gradient-to-r from-purple-500 to-pink-400
+        scale-x-0
+        group-hover:scale-x-100
+        origin-left
+        transition-transform duration-700 ease-out
+      "
+    />
+
+    {/* Icon */}
+    <div
+      className="
+        w-16 h-16
+        mx-auto
+        mb-5
+        rounded-2xl
+        bg-purple-50
+        flex items-center justify-center
+        text-4xl
+
+        transition-all
+        duration-700
+        ease-out
+
+        group-hover:scale-110
+        group-hover:-rotate-6
+        group-hover:bg-purple-100
+        group-hover:shadow-md
+      "
+    >
+      🤝
+    </div>
+
+    <h3
+      className="
+        text-xl font-bold text-gray-800 mb-3
+        transition-all duration-500
+        group-hover:text-purple-600
+        group-hover:-translate-y-1
+      "
+    >
+      Customer Focus
+    </h3>
+
+    <p
+      className="
+        text-gray-600 text-sm leading-6
+        transition-colors duration-500
+        group-hover:text-gray-700
+      "
+    >
+      We build strong relationships by understanding and
+      responding to our customers' needs.
+    </p>
+
+    <div
+      className="
+        mt-4
+        text-purple-600
+        opacity-0
+        translate-y-2
+        group-hover:opacity-100
+        group-hover:translate-y-0
+        transition-all duration-500
+      "
+    >
+      →
+    </div>
+
+  </div>
+
+</div>
 
         </section>
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaLinkedinIn,
@@ -6,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
- 
+
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
@@ -19,13 +20,17 @@ const Footer: React.FC = () => {
 
           {/* Company */}
           <div>
-            <h2 className="mb-8 text-3xl font-bold text-sky-600">
-              Marvel
-            </h2>
+            {/* Logo */}
+            <Link
+              to="/"
+              className="text-2xl font-bold italic text-sky-500"
+            >
+              <img src="/images/celexa_logo.png" alt="Logo" className="h-20 w-auto" />
+            </Link>
 
-            <p className="text-sm leading-7 text-gray-600 !mt-3">
-              Build modern web applications using React, TypeScript and
-              Tailwind CSS.
+            <p className="text-sm leading-5 text-gray-600 !mt-3">
+              Cellexa Energy is committed to creating a smarter and more sustainable energy future by
+              delivering innovative, reliable, and environmentally responsible energy solutions.
             </p>
 
             {/* Social Media */}
@@ -69,27 +74,39 @@ const Footer: React.FC = () => {
 
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Home
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/about"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   About
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/services"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Services
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/contact"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -102,27 +119,39 @@ const Footer: React.FC = () => {
 
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/careers"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Careers
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/blogs"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Blog
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/privacy_policy"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="transition hover:text-sky-600">
+                <Link
+                  to="/terms_conditions"
+                  className="transition duration-300 hover:text-sky-600"
+                >
                   Terms & Conditions
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,12 +171,12 @@ const Footer: React.FC = () => {
 
               <div className="flex items-center gap-3">
                 <IoIosMail className="text-xl text-sky-900" />
-                <span>support@marvel.com</span>
+                <span>Hr@celexaenergy.com</span>
               </div>
 
               <div className="flex items-center gap-3">
                 <FaPhoneVolume className="text-xl text-sky-900" />
-                <span>+91 9876543210</span>
+                <span>+91 98536 92955</span>
               </div>
 
             </div>

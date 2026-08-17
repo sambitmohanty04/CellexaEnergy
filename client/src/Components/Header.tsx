@@ -55,7 +55,7 @@ const Header: React.FC = () => {
           to="/"
           className="text-2xl font-bold italic text-sky-500"
         >
-          CELLEXA ENERGY
+          <img src="/images/celexa_logo.png" alt="Logo" className="h-20 w-auto" />
         </Link>
 
         {/* Desktop Menu */}
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
 
                 {childs.length > 0 ? (
                   <>
-                    <button className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-sky-600">
+                    <button className="flex items-center gap-1 text-sm font-semibold text-gray-900 hover:text-sky-600">
                       {menu.name}
                       <FiChevronDown />
                     </button>
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
                         <Link
                           key={sub.id}
                           to={sub.smenu_link}
-                          className="block px-5 py-3 font-semibold text-gray-500 hover:bg-sky-50 hover:text-sky-600"
+                          className="block px-5 py-3 font-semibold text-gray-900 hover:bg-sky-50 hover:text-sky-600"
                         >
                           {sub.smenu_name}
                         </Link>
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                 ) : (
                   <Link
                     to={menu.link}
-                    className="text-sm text-gray-500 font-semibold hover:text-sky-600"
+                    className="text-sm text-gray-900 font-semibold hover:text-sky-600"
                   >
                     {menu.name}
                   </Link>

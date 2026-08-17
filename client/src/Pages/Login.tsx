@@ -16,17 +16,19 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-    const response = await API_URL.post("/users", {
-      username,
-      password,
-    });
-    console.log(response.data);
-    setMessage("Login successful!");
-    setTimeout(() => {
-      navigate("/");
-    }, 1000);
+      const response = await API_URL.post("/users", {
+        username,
+        password,
+      });
+      console.log(response.data);
+      setMessage("Login successful!");
+      setTimeout(() => {
+        navigate("/");
+        setUsername("")
+        setPassword("")
+      }, 1000);
 
-    }catch (error: unknown) {
+    } catch (error: unknown) {
       console.error(error);
       alert("Login failed");
     }
@@ -49,15 +51,15 @@ const Login: React.FC = () => {
         </div>
 
         {message && (
-            <div className="mb-5 p-3 rounded-lg bg-green-100 text-green-700 text-center">
+          <div className="mb-5 p-3 rounded-lg bg-green-100 text-green-700 text-center">
             {message}
-            </div>
+          </div>
         )}
 
         {error && (
-            <div className="mb-5 p-3 rounded-lg bg-red-100 text-red-700 text-center">
+          <div className="mb-5 p-3 rounded-lg bg-red-100 text-red-700 text-center">
             {error}
-            </div>
+          </div>
         )}
 
         <form onSubmit={handleLogin}>

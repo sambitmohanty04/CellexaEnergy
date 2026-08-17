@@ -8,11 +8,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: "http://localhost:5173", // Change to 3000 if using CRA
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -21,69 +23,128 @@ app.get("/", (req, res) => {
   res.send("Server Running");
 });
 
+// Menu
 app.get("/api/menu", async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT 
+    const result = await pool.query(`
+      SELECT
         id,
         menu_name AS name,
         menu_link AS link
-        FROM menu
-        WHERE is_active = true
-        ORDER BY display_order`
-    );
+      FROM public.menu
+      WHERE is_active = true
+      ORDER BY display_order
+    `);
 
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
+    console.error("Menu Error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
+// Submenu
 app.get("/api/submenu", async (req, res) => {
   try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        menu_id,
+        submenu_name AS smenu_name,
+        submenu_link AS smenu_link
+      FROM public.submenu
+      ORDER BY menu_id, display_order
+    `);
 
-    const result = await pool.query(
-      `SELECT
-          id,
-          menu_id,
-          submenu_name AS smenu_name,
-          submenu_link AS smenu_link
-       FROM public.submenu
-       ORDER BY menu_id, display_order`
-    );
-    //console.log("Submenu Rows:", result.rows);
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
+    console.error("Submenu Error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
-// Get all contacts
-app.get("/contactus", async (req, res) => {
+
+// Contact - INSERT
+app.post("/api/contactus", async (req, res) => {
+  console.log("📥 Contact request:", req.body);
+
   try {
+    const {
+      name,
+      email,
+      phone,
+      subject,
+      message,
+    } = req.body;
+
+    // Validation
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, email and message are required.",
+      });
+    }
+
+    // Insert into PostgreSQL
     const result = await pool.query(
-      "SELECT * FROM contact_us ORDER BY id DESC"
+      `INSERT INTO public.contact_us
+        (full_name, email, phone, subject, message)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [
+        name,
+        email,
+        phone || null,
+        subject || null,
+        message,
+      ]
     );
 
-    res.json(result.rows);
+    console.log("✅ Contact inserted:", result.rows[0]);
+
+    res.status(201).json({
+      success: true,
+      message: "Contact form submitted successfully.",
+      data: result.rows[0],
+    });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Contact API Error:", err);
+
     res.status(500).json({
+      success: false,
+      message: "Unable to submit contact form.",
       error: err.message,
     });
   }
 });
-// app.post("/api/users", (req, res) => {
-//   console.log("========== LOGIN API HIT ==========");
-//   console.log("Body:", req.body);
 
-//   return res.json({
-//     success: true,
-//     message: "Login Successful",
-//     user: result.rows[1]
-//   });
-// });
+// Get contacts
+app.get("/api/contactus", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT *
+      FROM public.contact_us
+      ORDER BY id DESC
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Get Contact Error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
 // Login API
 app.post("/api/users", async (req, res) => {
   try {
@@ -104,9 +165,9 @@ app.post("/api/users", async (req, res) => {
           email,
           role
        FROM public.users
-       WHERE username=$1
-       AND password=$2
-       AND is_active=true`,
+       WHERE username = $1
+       AND password = $2
+       AND is_active = true`,
       [username, password]
     );
 
@@ -122,7 +183,6 @@ app.post("/api/users", async (req, res) => {
       message: "Login Successful",
       user: result.rows[0],
     });
-
   } catch (err) {
     console.error(err);
 
@@ -133,7 +193,7 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-
+// Server
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
