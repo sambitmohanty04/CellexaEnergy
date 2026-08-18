@@ -107,6 +107,32 @@ const Footer: React.FC = () => {
                 >
                   Contact
                 </Link>
+                
+              </li>
+              <li>
+                <Link
+                  to="/our_company"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Our Company
+                </Link>
+                
+              </li>
+              <li>
+                <Link
+                  to="/vision_mission"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Vision & Mission
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/leadership"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Leadership
+                </Link>
               </li>
             </ul>
           </div>
@@ -136,6 +162,38 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
 
+              <li>
+                <Link
+                  to="/telecom_services"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Telecom Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/solar_solution"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Solar Solution
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/safety_products"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Safety Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms_conditions"
+                  className="transition duration-300 hover:text-sky-600"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
               <li>
                 <Link
                   to="/privacy_policy"
