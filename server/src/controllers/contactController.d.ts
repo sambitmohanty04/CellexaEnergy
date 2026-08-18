@@ -1,0 +1,4 @@
+import type { Request, Response } from "express";
+export declare const getContacts: (req: Request, res: Response) => Promise<void>;
+export declare const createContact: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+//# sourceMappingURL=contactController.d.ts.map
