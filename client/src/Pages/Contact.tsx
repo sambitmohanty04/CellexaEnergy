@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -7,7 +6,6 @@ import "aos/dist/aos.css";
 import API_URL from "../service/api";
 
 const Contact: React.FC = () => {
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",

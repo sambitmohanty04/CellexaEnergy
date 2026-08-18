@@ -1,9 +1,9 @@
-import pkg from "pg";
+import pg from "pg";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const { Pool } = pkg;
+const { Pool } = pg;
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -11,15 +11,20 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 // Test connection
-pool.connect()
-  .then(client => {
-    console.log("✅ PostgreSQL Connected Successfully");
+pool
+  .connect()
+  .then((client) => {
+    console.log("✅ Supabase PostgreSQL Connected Successfully");
     client.release();
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("❌ Database Connection Error");
     console.error(err);
   });

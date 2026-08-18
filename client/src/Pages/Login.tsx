@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const [error, setError] = useState<string>("");
 
   const navigate = useNavigate();
-
+  console.log(setError)
   const handleLogin = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
