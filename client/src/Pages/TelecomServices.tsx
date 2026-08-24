@@ -123,7 +123,7 @@ const TelecomServices: React.FC = () => {
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
 
-              <button className="px-7 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition">
+              <button className="px-7 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition">
                 Explore Services
               </button>
 
@@ -150,7 +150,7 @@ const TelecomServices: React.FC = () => {
               <div className="relative">
 
                 <img
-                   src="/images/telecom_1.jpg"
+                  src="/images/telecom_1.jpg"
                   alt="Telecom Services"
                   className="w-full h-[420px] object-cover rounded-2xl shadow-xl"
                 />
@@ -224,7 +224,7 @@ const TelecomServices: React.FC = () => {
                   <div className="flex items-center gap-3">
 
                     <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-                      <BsLightningChargeFill className="text-blue-600"  />
+                      <BsLightningChargeFill className="text-blue-600" />
                     </div>
 
                     <span className="font-semibold text-slate-700">
@@ -279,10 +279,15 @@ const TelecomServices: React.FC = () => {
 
             {/* Header */}
             <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="w-12 h-[2px] bg-blue-500" />
 
-              <p className="text-blue-700 text-sm font-bold uppercase tracking-widest !mb-3">
-                Our Telecom Solutions
-              </p>
+                  <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    Our Telecom Solutions
+                  </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
                 Complete Connectivity Solutions
@@ -300,102 +305,98 @@ const TelecomServices: React.FC = () => {
             {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-  {telecomSolutions.map((solution) => {
+              {telecomSolutions.map((solution) => {
 
-    const Icon = solution.icon;
+                const Icon = solution.icon;
 
-    return (
-      <div
-        key={solution.title}
-        className="
-          group bg-white rounded-2xl overflow-hidden
-          shadow-lg hover:shadow-2xl
-          border border-slate-100
-          transition-all duration-300
-          hover:-translate-y-2
-        "
-      >
+                return (
+                  <div
+                    key={solution.title}
+                    className="
+                    group bg-white rounded-2xl overflow-hidden
+                    shadow-lg hover:shadow-2xl
+                    border border-slate-100
+                    transition-all duration-300
+                    hover:-translate-y-2
+                  "
+                  >
 
-        {/* Card Header */}
-        <div className="relative h-32 bg-gradient-to-r from-blue-700 to-blue-950">
+                    {/* Card Header */}
+                    <div className="relative h-32 bg-gradient-to-r from-blue-700 to-blue-950">
 
-          {/* Gradient Decoration */}
-          <div
-            className="
-              absolute inset-0
-              bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.35),transparent_45%)]
-            "
-          />
+                      {/* Gradient Decoration */}
+                      <div
+                        className="
+                        absolute inset-0
+                        bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.35),transparent_45%)]
+                      "
+                      />
 
-          <div className="relative z-10 p-7">
+                      <div className="relative z-10 p-7">
+                        {/* Icon */}
+                        <div
+                          className="
+                          w-14 h-14 rounded-xl
+                          bg-white/15
+                          backdrop-blur-sm
+                          border border-white/10
+                          flex items-center justify-center
+                          group-hover:bg-white/25
+                          group-hover:scale-110
+                          transition-all duration-300
+                        "
+                        >
+                          <Icon className="text-green-300 text-2xl" />
+                        </div>
+                      </div>
+                    </div>
 
-            {/* Icon */}
-            <div
-              className="
-                w-14 h-14 rounded-xl
-                bg-white/15
-                backdrop-blur-sm
-                border border-white/10
-                flex items-center justify-center
-                group-hover:bg-white/25
-                group-hover:scale-110
-                transition-all duration-300
-              "
-            >
-              <Icon className="text-green-300 text-2xl" />
+                    {/* Card Body */}
+                    <div className="p-7">
+
+                      {/* Title */}
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">
+                        {solution.title}
+                      </h3>
+
+
+                      {/* Description */}
+                      <p className="text-slate-600 leading-7 text-sm !mb-4">
+                        {solution.description}
+                      </p>
+
+
+                      {/* Features */}
+                      <div className="space-y-3">
+
+                        {solution.features.map((feature) => (
+
+                          <div
+                            key={feature}
+                            className="flex items-center gap-3"
+                          >
+
+                            <FaRegCheckCircle
+                              className="text-green-500 shrink-0"
+                            />
+
+                            <span className="text-slate-700 text-sm">
+                              {feature}
+                            </span>
+
+                          </div>
+
+                        ))}
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                );
+              })}
+
             </div>
-
-          </div>
-
-        </div>
-
-
-        {/* Card Body */}
-        <div className="p-7">
-
-          {/* Title */}
-          <h3 className="text-xl font-bold text-slate-900 mb-3">
-            {solution.title}
-          </h3>
-
-
-          {/* Description */}
-          <p className="text-slate-600 leading-7 text-sm !mb-4">
-            {solution.description}
-          </p>
-
-
-          {/* Features */}
-          <div className="space-y-3">
-
-            {solution.features.map((feature) => (
-
-              <div
-                key={feature}
-                className="flex items-center gap-3"
-              >
-
-                <FaRegCheckCircle
-                  className="text-green-500 shrink-0"
-                />
-
-                <span className="text-slate-700 text-sm">
-                  {feature}
-                </span>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </div>
-    );
-  })}
-
-</div>
           </div>
 
         </section>
@@ -409,9 +410,17 @@ const TelecomServices: React.FC = () => {
 
             <div className="text-center mb-10">
               <p className="text-blue-600 text-sm font-bold uppercase tracking-widest !mb-3">
-                What We Provide
+                
               </p>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                  <span className="w-12 h-[2px] bg-blue-500" />
 
+                  <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    What We Provide
+                  </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
                 Telecom Services
               </h2>
@@ -486,11 +495,15 @@ const TelecomServices: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6">
 
             <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                  <span className="w-12 h-[2px] bg-blue-500" />
 
-              <p className="text-blue-300 uppercase tracking-widest text-sm font-bold !mb-3">
-                Why Choose Us
-              </p>
+                  <p className="text-blue-300 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    Why Choose Us
+                  </p>
 
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold !text-white">
                 Built for Reliable Connectivity
               </h2>
@@ -673,11 +686,15 @@ const TelecomServices: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6">
 
             <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                  <span className="w-12 h-[2px] bg-blue-500" />
 
-              <p className="text-blue-700 uppercase tracking-widest text-sm font-bold !mb-2">
-                Our Approach
-              </p>
+                  <p className="text-blue-600 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    Our Approach
+                  </p>
 
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
                 How We Deliver
               </h2>

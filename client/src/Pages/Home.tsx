@@ -1,5 +1,6 @@
 import React from 'react'
 import ContactusComponent from "../Components/ContactusComponent";
+import {Link} from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -249,7 +250,7 @@ const Home: React.FC = () => {
                 {/* Bottom Link */}
                 <div className="mt-7 flex items-center gap-2 text-green-600 font-semibold text-sm group-hover:gap-4 transition-all duration-300">
                   <span>Explore Service</span>
-                  <span>→</span>
+                  <span><Link to="/solar_solution">→</Link></span>
                 </div>
 
               </div>

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import menuRoutes from "./routes/menuRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import blogRoutes from "./routes/blogsRoutes.js";
 
 dotenv.config();
 
@@ -21,11 +22,9 @@ app.use(
       if (!origin) {
         return callback(null, true);
       }
-
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-
       return callback(new Error("Not allowed by CORS"));
     },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -42,6 +41,7 @@ app.get("/", (req, res) => {
 app.use("/api/menu", menuRoutes);
 app.use("/api/contactus", contactRoutes);
 app.use("/api", authRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

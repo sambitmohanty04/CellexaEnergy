@@ -122,10 +122,15 @@ const SafetyProducts: React.FC = () => {
 
           {/* Hero Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="w-12 h-[2px] bg-blue-500" />
 
-            <p className="text-orange-300 uppercase tracking-widest font-semibold mb-4">
-              Safety Products
-            </p>
+              <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                Safety Products
+              </p>
+
+              <span className="w-12 h-[2px] bg-blue-500" />
+            </div>
 
             <h1 className="text-4xl md:text-6xl font-bold !text-white mb-6">
               Protecting People & Workplaces
@@ -153,10 +158,15 @@ const SafetyProducts: React.FC = () => {
 
             {/* Section Heading */}
             <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="w-12 h-[2px] bg-blue-500" />
 
-              <p className="text-blue-600 text-sm font-bold uppercase tracking-widest !mb-3">
-                What We Provide
-              </p>
+                  <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    What We Provide
+                  </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
                 Safety Products
@@ -346,10 +356,15 @@ const SafetyProducts: React.FC = () => {
 
             {/* Heading */}
             <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="w-12 h-[2px] bg-blue-500" />
 
-              <p className="text-blue-300 uppercase tracking-widest text-sm font-bold !mb-3">
-                Why Safety Matters
-              </p>
+                  <p className="text-blue-700 !mb-0 text-xs font-bold uppercase tracking-wide">
+                    Why Safety Matters
+                  </p>
+
+                <span className="w-12 h-[2px] bg-blue-500" />
+              </div>
 
               <h2 className="text-3xl md:text-4xl font-bold !text-white">
                 Protection You Can Rely On

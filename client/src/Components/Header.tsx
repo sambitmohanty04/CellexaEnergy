@@ -38,7 +38,7 @@ const Header: React.FC = () => {
 
   const loadSubMenus = async () => {
     try {
-      const response = await API_URL.get("/submenu");
+      const response = await API_URL.get("/menu/submenu");
       setSubMenus(response.data);
     } catch (err) {
       console.error(err);

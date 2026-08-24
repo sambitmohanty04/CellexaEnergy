@@ -14,10 +14,13 @@ import ContactMessages from "./Pages/ContactMessages";
 import TelecomServices from "./Pages/TelecomServices";
 import SolarSolution from "./Pages/SolarSolution";
 import SafetyProducts from "./Pages/SafetyProducts";
-import Blogs from "./Pages/Blogs";
+import Blogs from "./Pages/blogs/Blogs";
+import BlogDetails from "./Pages/blogs/BlogDetails";
+import AddBlog from "./Pages/blogs/AddBlog";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import TermsConditions from "./Pages/TermsConditions";
 import Careers from "./Pages/Careers";
+import ManpowerServices from "./Pages/ManpowerServices";
 import NotFound from "./Pages/NotFound";
 import Login from "./Pages/Login";
 
@@ -39,6 +42,8 @@ const App: React.FC = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/blogs" element={<Blogs />} />
+            <Route path="/blogs/:slug" element={<BlogDetails />} />
+            <Route path="/add_blog" element={<AddBlog />} />
             <Route path="/our_company" element={<OurCompany />} />
             <Route path="/services" element={<Services />} />
             <Route path="/telecom_services" element={<TelecomServices />} />
@@ -50,6 +55,7 @@ const App: React.FC = () => {
             <Route path="/terms_conditions" element={<TermsConditions />} />
             <Route path="/contact_messages" element={<ContactMessages />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/manpower_services" element={<ManpowerServices />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

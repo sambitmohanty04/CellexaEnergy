@@ -387,7 +387,7 @@ const Contact: React.FC = () => {
                       <p className="mt-1 text-sm leading-6 text-blue-100">
                         Cellexa Energy Pvt. Ltd.
                         <br />
-                        Bangalore, Karnataka
+                        No-618/2148, Dibya Bihar, Lane-5, Samantarapur, Khordha, Bhubaneswar, Odisha, 751002
                         <br />
                         India
                       </p>
@@ -978,7 +978,7 @@ const Contact: React.FC = () => {
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-500">
-                  Visit our office in Bangalore.
+                  Visit our office in Bhubaneswar.
                 </p>
 
               </div>
@@ -1049,7 +1049,7 @@ const Contact: React.FC = () => {
               </div>
 
               <p className="font-semibold text-gray-700">
-                Bangalore, Karnataka
+                Bhubaneswar, Odisha
               </p>
 
               <p className="mt-1 text-sm text-gray-500">
