@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import ContactusComponent from "../../Components/ContactusComponent";
 import API_URL from "../../service/api";
-import { useParams } from "react-router-dom";
 import { FaCalendarDays } from "react-icons/fa6";
 import { IoIosTimer } from "react-icons/io";
 //import AddBlog from "./AddBlog";
