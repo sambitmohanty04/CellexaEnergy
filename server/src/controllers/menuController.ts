@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import pool from "../db.js";
 
-// menu api
+// Menu API
 export const getMenu = async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
@@ -26,7 +26,7 @@ export const getMenu = async (req: Request, res: Response) => {
   }
 };
 
-// submenu api
+// Submenu API
 export const getSubmenu = async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
