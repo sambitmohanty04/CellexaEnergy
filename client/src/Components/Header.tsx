@@ -1,135 +1,264 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
-import API_URL from "../service/api";
 
-interface Menu {
+interface SubMenu {
   id: number;
   name: string;
   link: string;
 }
 
-interface SubMenu {
+interface Menu {
   id: number;
-  menu_id: number;
-  smenu_name: string;
-  smenu_link: string;
+  name: string;
+  link?: string;
+  subMenus?: SubMenu[];
 }
 
 const Header: React.FC = () => {
-  const [menus, setMenus] = useState<Menu[]>([]);
-  const [subMenus, setSubMenus] = useState<SubMenu[]>([]);
+  // =========================
+  // STATIC MENU + SUBMENU
+  // =========================
+  const menus: Menu[] = [
+    {
+      id: 1,
+      name: "Home",
+      link: "/",
+    },
+
+    {
+      id: 2,
+      name: "About",
+      link: "/about",
+    },
+
+    {
+      id: 3,
+      name: "What We Do",
+      subMenus: [
+        {
+          id: 31,
+          name: "Telecom Services",
+          link: "/telecom-services",
+        },
+        {
+          id: 32,
+          name: "Solar Solutions",
+          link: "/solar-solutions",
+        },
+        {
+          id: 33,
+          name: "Safety Products",
+          link: "/safety-products",
+        },
+      ],
+    },
+
+    {
+      id: 4,
+      name: "Who We Are",
+      subMenus: [
+        {
+          id: 34,
+          name: "Our Company",
+          link: "/our_company",
+        },
+        {
+          id: 35,
+          name: "Leadership",
+          link: "/leadership",
+        },
+        {
+          id: 36,
+          name: "Careers",
+          link: "/careers",
+        },
+        {
+          id: 37,
+          name: "Vision & Mission",
+          link: "/vision_mission",
+        },
+        {
+          id: 38,
+          name: "Manpower Services",
+          link: "/manpower_services",
+        },
+      ],
+    },
+
+    {
+      id: 5,
+      name: "Our Blogs",
+      link: "/blogs",
+    },
+
+    {
+      id: 6,
+      name: "Contact Us",
+      link: "/contact",
+    },
+  ];
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
-  useEffect(() => {
-    loadMenus();
-    loadSubMenus();
-  }, []);
-
-  const loadMenus = async () => {
-    try {
-      const response = await API_URL.get("/menu");
-      setMenus(response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const loadSubMenus = async () => {
-    try {
-      const response = await API_URL.get("/menu/submenu");
-      setSubMenus(response.data);
-    } catch (err) {
-      console.error(err);
-    }
+  // =========================
+  // CLOSE MOBILE MENU
+  // =========================
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setOpenDropdown(null);
   };
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow">
 
+      {/* =========================
+          HEADER
+      ========================== */}
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
-        {/* Logo */}
+        {/* =========================
+            LOGO
+        ========================== */}
         <Link
           to="/"
-          className="text-2xl font-bold italic text-sky-500"
+          onClick={closeMobileMenu}
+          className="flex items-center"
         >
-          <img src="/images/celexa_logo.png" alt="Logo" className="h-20 w-auto" />
+          <img
+            src="/images/celexa_logo.png"
+            alt="Cellexa Energy Logo"
+            className="h-20 w-auto"
+          />
         </Link>
 
-        {/* Desktop Menu */}
-        <nav className="hidden items-center gap-4 lg:flex">
+        {/* =========================
+            DESKTOP MENU
+        ========================== */}
+        <nav className="hidden items-center gap-6 lg:flex">
 
-          {menus.map((menu) => {
+          {menus.map((menu) => (
 
-            const childs = subMenus.filter(
-              (item) => item.menu_id === menu.id
-            );
+            <div
+              key={menu.id}
+              className="group relative"
+            >
 
-            return (
-              <div
-                key={menu.id}
-                className="group relative"
-              >
-
-                {childs.length > 0 ? (
-                  <>
-                    <button className="flex items-center gap-1 text-sm font-semibold text-gray-900 hover:text-sky-600">
-                      {menu.name}
-                      <FiChevronDown />
-                    </button>
-
-                    <div
-                      className="
-                        font-semibold
-                        invisible
-                        absolute
-                        left-0
-                        top-full
-                        mt-2
-                        w-54
-                        rounded-lg
-                        bg-white
-                        text-sm
-                        shadow-xl
-                        opacity-0
-                        transition-all
-                        duration-300
-                        group-hover:visible
-                        group-hover:opacity-100
-                      "
-                    >
-                      {childs.map((sub) => (
-                        <Link
-                          key={sub.id}
-                          to={sub.smenu_link}
-                          className="block px-5 py-3 font-semibold text-gray-900 hover:bg-sky-50 hover:text-sky-600"
-                        >
-                          {sub.smenu_name}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    to={menu.link}
-                    className="text-sm text-gray-900 font-semibold hover:text-sky-600"
+              {/* =========================
+                  MENU WITH SUBMENU
+              ========================== */}
+              {menu.subMenus && menu.subMenus.length > 0 ? (
+                <>
+                  <button
+                    type="button"
+                    className="
+                      flex
+                      items-center
+                      gap-1
+                      text-sm
+                      font-semibold
+                      text-gray-900
+                      transition-colors
+                      hover:text-sky-600
+                    "
                   >
                     {menu.name}
-                  </Link>
-                )}
 
-              </div>
-            );
-          })}
+                    <FiChevronDown
+                      size={16}
+                      className="
+                        transition-transform
+                        duration-300
+                        group-hover:rotate-180
+                      "
+                    />
+                  </button>
+
+                  {/* =========================
+                      DESKTOP DROPDOWN
+                  ========================== */}
+                  <div
+                    className="
+                      invisible
+                      absolute
+                      left-0
+                      top-full
+                      mt-2
+                      w-60
+                      rounded-lg
+                      bg-white
+                      py-2
+                      text-sm
+                      shadow-xl
+                      opacity-0
+                      transition-all
+                      duration-300
+                      group-hover:visible
+                      group-hover:opacity-100
+                    "
+                  >
+
+                    {menu.subMenus.map((subMenu) => (
+
+                      <Link
+                        key={subMenu.id}
+                        to={subMenu.link}
+                        className="
+                          block
+                          px-5
+                          py-3
+                          font-semibold
+                          text-gray-900
+                          transition-colors
+                          hover:bg-sky-50
+                          hover:text-sky-600
+                        "
+                      >
+                        {subMenu.name}
+                      </Link>
+
+                    ))}
+
+                  </div>
+                </>
+              ) : (
+
+                /* =========================
+                   NORMAL MENU
+                ========================== */
+                <Link
+                  to={menu.link || "#"}
+                  className="
+                    text-sm
+                    font-semibold
+                    text-gray-900
+                    transition-colors
+                    hover:text-sky-600
+                  "
+                >
+                  {menu.name}
+                </Link>
+
+              )}
+
+            </div>
+
+          ))}
 
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* =========================
+            MOBILE BUTTON
+        ========================== */}
         <button
+          type="button"
           className="lg:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onClick={() =>
+            setMobileMenuOpen(!mobileMenuOpen)
+          }
+          aria-label="Toggle menu"
         >
           {mobileMenuOpen ? (
             <FiX size={28} />
@@ -140,75 +269,124 @@ const Header: React.FC = () => {
 
       </div>
 
-      {/* Mobile Menu */}
+      {/* =========================
+          MOBILE MENU
+      ========================== */}
       {mobileMenuOpen && (
 
         <div className="bg-white lg:hidden">
 
-          {menus.map((menu) => {
+          {menus.map((menu) => (
 
-            const childs = subMenus.filter(
-              (item) => item.menu_id === menu.id
-            );
+            <div
+              key={menu.id}
+              className="border-t border-gray-100"
+            >
 
-            return (
+              {/* =========================
+                  MOBILE SUBMENU
+              ========================== */}
+              {menu.subMenus && menu.subMenus.length > 0 ? (
 
-              <div key={menu.id} className="">
-
-                {childs.length > 0 ? (
-                  <>
-                    <button
-                      onClick={() =>
-                        setOpenDropdown(
-                          openDropdown === menu.id ? null : menu.id
-                        )
-                      }
-                      className="flex w-full items-center justify-between px-6 py-4 text-left text-sm text-gray-600"
-                    >
-                      {menu.name}
-
-                      <FiChevronDown
-                        className={`transition-transform ${openDropdown === menu.id
-                            ? "rotate-180"
-                            : ""
-                          }`}
-                      />
-                    </button>
-
-                    {openDropdown === menu.id && (
-
-                      <div className="bg-gray-50">
-
-                        {childs.map((sub) => (
-                          <Link
-                            key={sub.id}
-                            to={sub.smenu_link}
-                            className="block px-10 py-3 text-sm text-gray-600 hover:bg-sky-100 hover:text-sky-600"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            {sub.smenu_name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-
-                  <Link
-                    to={menu.link}
-                    className="block px-6 py-4 text-sm text-gray-600 hover:bg-gray-100"
-                    onClick={() => setMobileMenuOpen(false)}
+                <>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setOpenDropdown(
+                        openDropdown === menu.id
+                          ? null
+                          : menu.id
+                      )
+                    }
+                    className="
+                      flex
+                      w-full
+                      items-center
+                      justify-between
+                      px-6
+                      py-4
+                      text-left
+                      text-sm
+                      font-semibold
+                      text-gray-700
+                      hover:bg-gray-50
+                    "
                   >
                     {menu.name}
-                  </Link>
 
-                )}
+                    <FiChevronDown
+                      size={18}
+                      className={`
+                        transition-transform
+                        duration-300
+                        ${
+                          openDropdown === menu.id
+                            ? "rotate-180"
+                            : ""
+                        }
+                      `}
+                    />
+                  </button>
 
-              </div>
+                  {openDropdown === menu.id && (
 
-            );
+                    <div className="bg-gray-50">
 
-          })}
+                      {menu.subMenus.map((subMenu) => (
+
+                        <Link
+                          key={subMenu.id}
+                          to={subMenu.link}
+                          className="
+                            block
+                            px-10
+                            py-3
+                            text-sm
+                            font-medium
+                            text-gray-600
+                            hover:bg-sky-100
+                            hover:text-sky-600
+                          "
+                          onClick={closeMobileMenu}
+                        >
+                          {subMenu.name}
+                        </Link>
+
+                      ))}
+
+                    </div>
+
+                  )}
+
+                </>
+
+              ) : (
+
+                /* =========================
+                   MOBILE NORMAL MENU
+                ========================== */
+                <Link
+                  to={menu.link || "#"}
+                  className="
+                    block
+                    px-6
+                    py-4
+                    text-sm
+                    font-semibold
+                    text-gray-700
+                    hover:bg-gray-100
+                    hover:text-sky-600
+                  "
+                  onClick={closeMobileMenu}
+                >
+                  {menu.name}
+                </Link>
+
+              )}
+
+            </div>
+
+          ))}
 
         </div>
 
