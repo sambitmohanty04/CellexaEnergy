@@ -7,6 +7,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import blogRoutes from "./routes/blogsRoutes.js";
 
+
 dotenv.config();
 
 const app = express();
