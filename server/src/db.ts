@@ -3,15 +3,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-console.log("DATABASE CONFIG:", {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  hasPassword: Boolean(process.env.DB_PASSWORD),
-});
-
 const { Pool } = pg;
+
+console.log("DB HOST:", process.env.DB_HOST);
+console.log("DB PORT:", process.env.DB_PORT);
+console.log("DB USER:", process.env.DB_USER);
+console.log("DB NAME:", process.env.DB_NAME);
+console.log("PASSWORD EXISTS:", Boolean(process.env.DB_PASSWORD));
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -25,11 +23,3 @@ const pool = new Pool({
 });
 
 export default pool;
-
-console.log("DATABASE CONFIG:", {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  hasPassword: Boolean(process.env.DB_PASSWORD),
-});
