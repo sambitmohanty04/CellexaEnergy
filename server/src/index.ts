@@ -19,12 +19,15 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
+      // Allow requests without an Origin header
       if (!origin) {
         return callback(null, true);
       }
+
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
+
       return callback(new Error("Not allowed by CORS"));
     },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -34,15 +37,18 @@ app.use(
 
 app.use(express.json());
 
+// Health check
 app.get("/", (req, res) => {
   res.status(200).send("Server Running");
 });
 
+// API routes
 app.use("/api/menu", menuRoutes);
 app.use("/api/contactus", contactRoutes);
 app.use("/api", authRoutes);
 app.use("/api/blogs", blogRoutes);
 
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
