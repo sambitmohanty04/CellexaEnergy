@@ -21,6 +21,7 @@ export const getMenu = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch menu",
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 };
@@ -45,6 +46,7 @@ export const getSubmenu = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch submenu",
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 };
