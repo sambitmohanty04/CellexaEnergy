@@ -39,7 +39,13 @@ app.use(express.json());
 
 // Health check
 app.get("/", (req, res) => {
-  res.status(200).send("Server Running");
+  res.status(200).send({
+    DB_HOST: process.env.DB_HOST || "db.otiwmjiuprhdqhjzyrmz.supabase.co",
+    DB_PORT: process.env.DB_PORT || "5432",
+    DB_USER: process.env.DB_USER || "postgres",
+    DB_NAME: process.env.DB_NAME || "postgres",
+    PASSWORD_EXISTS: Boolean(process.env.DB_PASSWORD),
+  });
 });
 
 // API routes
