@@ -53,7 +53,7 @@ const Home: React.FC = () => {
               </Link>
 
               <Link
-                to="/contact-us"
+                to="/contact"
                 className="bg-white hover:bg-gray-100 text-blue-900 font-semibold px-7 py-3 rounded-lg transition"
               >
                 Contact Us
@@ -138,12 +138,12 @@ const Home: React.FC = () => {
                   installation and maintenance.
                 </p>
 
-                <a
-                  href="/about"
-                  className="inline-block bg-blue-700 hover:bg-blue-800 !text-white font-semibold px-7 py-3 rounded-lg transition"
-                >
-                  Learn More
-                </a>
+                <Link
+  to="/about"
+  className="inline-block bg-blue-700 hover:bg-blue-800 !text-white font-semibold px-7 py-3 rounded-lg transition"
+>
+  Learn More
+</Link>
 
               </div>
 
@@ -861,7 +861,7 @@ const Home: React.FC = () => {
                 </div>
 
                 <a
-                  href="/our-company"
+                  href="/our_company"
                   className="inline-flex items-center gap-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold px-5 py-3 rounded-xl transition-all duration-300 hover:shadow-lg"
                 >
                   Our Company

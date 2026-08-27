@@ -133,7 +133,7 @@ const ContactusComponent: React.FC = () => {
         >
 
           <Link
-            to="/contact-us"
+            to="/contact"
             className="
     group/btn
     inline-flex items-center gap-3
