@@ -489,7 +489,7 @@ const Contact: React.FC = () => {
                       </h3>
 
                       <p className="mt-1 text-sm text-blue-100">
-                        Hr@celexaenergy.com
+                        Hr@cellexa.co.in
                       </p>
                     </div>
 

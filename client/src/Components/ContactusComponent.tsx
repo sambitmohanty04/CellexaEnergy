@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
 
 const ContactusComponent: React.FC = () => {
 
@@ -131,39 +132,37 @@ const ContactusComponent: React.FC = () => {
           data-aos-delay="400"
         >
 
-          <a
-            href="/contact-us"
+          <Link
+            to="/contact-us"
             className="
-              group/btn
-              inline-flex items-center gap-3
-              bg-blue-600
-              hover:bg-blue-700
-              text-white
-              font-semibold
-              px-5 py-2.5
-              rounded-xl
-              shadow-lg
-              hover:shadow-blue-500/30
-              hover:-translate-y-1
-              transition-all duration-300
-            "
+    group/btn
+    inline-flex items-center gap-3
+    bg-blue-600
+    hover:bg-blue-700
+    text-white
+    font-semibold
+    px-5 py-2.5
+    rounded-xl
+    shadow-lg
+    hover:shadow-blue-500/30
+    hover:-translate-y-1
+    transition-all duration-300
+  "
           >
-
             <span>
               Contact Us
             </span>
 
             <span
               className="
-                text-lg
-                transition-transform duration-300
-                group-hover/btn:translate-x-2
-              "
+      text-lg
+      transition-transform duration-300
+      group-hover/btn:translate-x-2
+    "
             >
               →
             </span>
-
-          </a>
+          </Link>
 
         </div>
 

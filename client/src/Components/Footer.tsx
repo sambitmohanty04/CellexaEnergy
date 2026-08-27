@@ -169,7 +169,7 @@ const Footer: React.FC = () => {
 
               <div className="flex items-center gap-3">
                 <IoIosMail className="text-md text-sky-900" />
-                <span>Hr@celexaenergy.com</span>
+                <span>Hr@cellexa.co.in</span>
               </div>
 
               <div className="flex items-center gap-3">

@@ -157,7 +157,7 @@ const Header: React.FC = () => {
                       flex
                       items-center
                       gap-1
-                      text-sm
+                      text-xs
                       font-semibold
                       text-gray-900
                       transition-colors

@@ -1,6 +1,6 @@
 import React from 'react'
 import ContactusComponent from "../Components/ContactusComponent";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -45,19 +45,19 @@ const Home: React.FC = () => {
 
             <div className="flex flex-wrap gap-4">
 
-              <a
-                href="/about"
+              <Link
+                to="/about"
                 className="bg-blue-700 hover:bg-blue-800 !text-white font-semibold px-7 py-3 rounded-lg transition"
               >
                 Discover More
-              </a>
+              </Link>
 
-              <a
-                href="/contact-us"
+              <Link
+                to="/contact-us"
                 className="bg-white hover:bg-gray-100 text-blue-900 font-semibold px-7 py-3 rounded-lg transition"
               >
                 Contact Us
-              </a>
+              </Link>
 
             </div>
 
@@ -85,12 +85,12 @@ const Home: React.FC = () => {
               <div>
 
                 <div
-  data-aos="fade-right"
-  data-aos-duration="800"
-  className="flex items-center gap-3 !mb-3"
->
-  <span
-    className="
+                  data-aos="fade-right"
+                  data-aos-duration="800"
+                  className="flex items-center gap-3 !mb-3"
+                >
+                  <span
+                    className="
       block
       w-10 h-[2px]
       bg-blue-600
@@ -98,13 +98,13 @@ const Home: React.FC = () => {
       transition-all duration-500 ease-out
       hover:w-16
     "
-  />
+                  />
 
-  <p
-    data-aos="fade-left"
-    data-aos-duration="700"
-    data-aos-delay="250"
-    className="
+                  <p
+                    data-aos="fade-left"
+                    data-aos-duration="700"
+                    data-aos-delay="250"
+                    className="
       text-blue-700
       text-xs
       font-bold
@@ -114,10 +114,10 @@ const Home: React.FC = () => {
       duration-300
       hover:tracking-[0.25em]
     "
-  >
-    Welcome to Cellexa Energy
-  </p>
-</div>
+                  >
+                    Welcome to Cellexa Energy
+                  </p>
+                </div>
 
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 !mb-3">
                   Creating a Smarter and Sustainable Energy Future
