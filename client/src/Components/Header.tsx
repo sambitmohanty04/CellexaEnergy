@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
-import API_URL from "../service/api"; 
+import API_URL from "../service/api"
 
 interface SubMenu {
   id: number;

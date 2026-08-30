@@ -439,7 +439,7 @@ const Contact: React.FC = () => {
                       </h3>
 
                       <p className="mt-1 text-sm text-blue-100">
-                        +91 98536 92955
+                        +91 9337372340
                       </p>
                     </div>
 
