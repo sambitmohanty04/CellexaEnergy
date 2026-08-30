@@ -21,7 +21,7 @@ export const menus = [
       {
         id: 32,
         name: "Solar Solutions",
-        link: "/solar-solutions",
+        link: "/solar-solution",
       },
       {
         id: 33,
