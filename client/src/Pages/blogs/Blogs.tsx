@@ -47,7 +47,7 @@ const Blog: React.FC = () => {
     try {
       setLoading(true);
 
-      const response = await API_URL.get("/blogs");
+      const response = await API_URL.get("/api/blogs");
 
       console.log("Blog data:", response.data);
 
@@ -63,12 +63,8 @@ const Blog: React.FC = () => {
     <>
       <div className="bg-gray-50 min-h-screen">
 
-        {/* =====================================================
-            PAGE HEADER
-        ====================================================== */}
         <section className="relative overflow-hidden py-10">
 
-          {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
@@ -102,12 +98,6 @@ const Blog: React.FC = () => {
           </div>
 
         </section>
-
-        {/* ========================Add Blog========================== */}
-
-        {/* =====================================================
-            INTRO SECTION
-        ====================================================== */}
         <section className="max-w-7xl mx-auto px-6 py-16">
 
           <div className="text-center max-w-3xl mx-auto">
@@ -134,10 +124,6 @@ const Blog: React.FC = () => {
           </div>
 
         </section>
-
-        {/* =====================================================
-            FEATURED BLOG
-        ====================================================== */}
         <section className="max-w-7xl mx-auto px-6 pb-16">
 
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -341,9 +327,6 @@ const Blog: React.FC = () => {
             </div>
           </div>
         </section>
-        {/* =====================================================
-            CATEGORY FILTER
-        ====================================================== */}
         <section className="bg-white border-y border-gray-100">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex flex-wrap justify-center gap-3">
@@ -367,10 +350,6 @@ const Blog: React.FC = () => {
             BLOGS
         ====================================================== */}
         <section className="max-w-7xl mx-auto px-6 py-16">
-
-          {/* =====================================
-      SECTION HEADER
-  ===================================== */}
           <div className="mb-12 text-center">
 
             {/* Section Heading */}

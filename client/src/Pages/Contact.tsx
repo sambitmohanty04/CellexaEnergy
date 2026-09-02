@@ -18,10 +18,6 @@ const Contact: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // =====================================================
-  // AOS INITIALIZATION
-  // =====================================================
-
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -31,30 +27,18 @@ const Contact: React.FC = () => {
 
     AOS.refresh();
   }, []);
-
-  // =====================================================
-  // HANDLE INPUT CHANGE
-  // =====================================================
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
 
-    // Clear previous messages while typing
     setSuccessMessage("");
     setErrorMessage("");
   };
-
-  // =====================================================
-  // HANDLE FORM SUBMIT
-  // =====================================================
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -78,10 +62,7 @@ const Contact: React.FC = () => {
           "Thank you! Your message has been submitted.";
 
         setSuccessMessage(message);
-
         toast.success(message);
-
-        // Clear form
         setFormData({
           name: "",
           email: "",
@@ -106,21 +87,13 @@ const Contact: React.FC = () => {
         "Unable to submit your message. Please try again.";
 
       setErrorMessage(message);
-
       toast.error(message);
     }
   };
 
   return (
     <div className="min-h-screen bg-slate-50">
-
-      {/* =====================================================
-          PAGE HEADER
-      ====================================================== */}
-
       <section className="relative overflow-hidden bg-blue-950 py-10">
-
-        {/* Background Circle 1 */}
         <div
           className="
             absolute
@@ -134,8 +107,6 @@ const Contact: React.FC = () => {
             animate-pulse
           "
         />
-
-        {/* Background Circle 2 */}
         <div
           className="
             absolute
@@ -149,8 +120,6 @@ const Contact: React.FC = () => {
             animate-pulse
           "
         />
-
-        {/* Floating Circle */}
         <div
           className="
             absolute
@@ -163,8 +132,6 @@ const Contact: React.FC = () => {
             animate-bounce
           "
         />
-
-        {/* Floating Circle */}
         <div
           className="
             absolute
@@ -195,7 +162,6 @@ const Contact: React.FC = () => {
             <span className="h-[2px] w-10 bg-blue-400" />
           </div>
 
-          {/* Heading */}
           <h1
             data-aos="fade-up"
             data-aos-duration="1000"
@@ -210,8 +176,6 @@ const Contact: React.FC = () => {
           >
             Contact Us
           </h1>
-
-          {/* Description */}
           <p
             data-aos="fade-up"
             data-aos-duration="900"
@@ -230,14 +194,7 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
-
-      {/* =====================================================
-          CONTACT SECTION
-      ====================================================== */}
-
       <section className="relative overflow-hidden py-16">
-
-        {/* Background Decoration */}
         <div
           className="
             absolute
@@ -268,10 +225,6 @@ const Contact: React.FC = () => {
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
-            {/* =================================================
-                CONTACT INFORMATION
-            ================================================== */}
-
             <div
               data-aos="fade-right"
               data-aos-duration="1000"
@@ -300,7 +253,6 @@ const Contact: React.FC = () => {
                 "
               >
 
-                {/* Decorative Circle */}
                 <div
                   className="
                     absolute
@@ -316,7 +268,6 @@ const Contact: React.FC = () => {
                   "
                 />
 
-                {/* Decorative Circle */}
                 <div
                   className="
                     absolute
@@ -336,18 +287,15 @@ const Contact: React.FC = () => {
                     Get In Touch
                   </h2>
 
-                  <p className="!mb-8 text-sm leading-7 text-blue-100">
+                  <p className="!mb-4 text-sm leading-7 text-blue-100">
                     We are here to help and answer any questions you may have.
                     Feel free to reach out to us.
                   </p>
 
-
-                  {/* ================= ADDRESS ================= */}
-
                   <div
                     className="
                       group/item
-                      mb-5
+                      mb-3
                       flex
                       gap-4
                       rounded-xl
@@ -394,14 +342,10 @@ const Contact: React.FC = () => {
                     </div>
 
                   </div>
-
-
-                  {/* ================= PHONE ================= */}
-
                   <div
                     className="
                       group/item
-                      mb-7
+                      mb-3
                       flex
                       gap-4
                       rounded-xl
@@ -444,14 +388,10 @@ const Contact: React.FC = () => {
                     </div>
 
                   </div>
-
-
-                  {/* ================= EMAIL ================= */}
-
                   <div
                     className="
                       group/item
-                      mb-7
+                      mb-3
                       flex
                       gap-4
                       rounded-xl
@@ -487,17 +427,15 @@ const Contact: React.FC = () => {
                       <h3 className="text-lg font-semibold">
                         Email
                       </h3>
-
                       <p className="mt-1 text-sm text-blue-100">
-                        Hr@cellexa.co.in
+                        info@cellexa.co.in
+                      </p>
+                      <p className="mt-1 text-sm text-blue-100">
+                        hr@cellexa.co.in
                       </p>
                     </div>
 
                   </div>
-
-
-                  {/* ================= WORKING HOURS ================= */}
-
                   <div
                     className="
                       group/item
@@ -550,11 +488,6 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-
-            {/* =================================================
-                CONTACT FORM
-            ================================================== */}
-
             <div
               data-aos="fade-left"
               data-aos-duration="1000"
@@ -579,8 +512,6 @@ const Contact: React.FC = () => {
                   lg:p-10
                 "
               >
-
-                {/* Top Animated Line */}
                 <div
                   className="
                     absolute
@@ -608,9 +539,6 @@ const Contact: React.FC = () => {
                   Fill in the form below and our team will get back to you.
                 </p>
 
-
-                {/* Success Message */}
-
                 {successMessage && (
                   <div
                     data-aos="fade-down"
@@ -629,9 +557,6 @@ const Contact: React.FC = () => {
                   </div>
                 )}
 
-
-                {/* Error Message */}
-
                 {errorMessage && (
                   <div
                     data-aos="fade-down"
@@ -649,22 +574,13 @@ const Contact: React.FC = () => {
                     {errorMessage}
                   </div>
                 )}
-
-
-                {/* FORM */}
-
                 <form
                   className="mt-5"
                   onSubmit={handleSubmit}
                 >
 
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-
-                    {/* NAME */}
-
                     <div>
-
                       <label className="mb-2 block text-sm font-medium text-gray-700">
                         Full Name *
                       </label>
@@ -696,12 +612,7 @@ const Contact: React.FC = () => {
                       />
 
                     </div>
-
-
-                    {/* EMAIL */}
-
                     <div>
-
                       <label className="mb-2 block text-sm font-medium text-gray-700">
                         Email Address *
                       </label>
@@ -731,14 +642,8 @@ const Contact: React.FC = () => {
                           focus:ring-blue-100
                         "
                       />
-
                     </div>
-
-
-                    {/* PHONE */}
-
                     <div>
-
                       <label className="mb-2 block text-sm font-medium text-gray-700">
                         Phone Number
                       </label>
@@ -769,10 +674,6 @@ const Contact: React.FC = () => {
                       />
 
                     </div>
-
-
-                    {/* SUBJECT */}
-
                     <div>
 
                       <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -808,10 +709,6 @@ const Contact: React.FC = () => {
                     </div>
 
                   </div>
-
-
-                  {/* MESSAGE */}
-
                   <div className="mt-6">
 
                     <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -846,10 +743,6 @@ const Contact: React.FC = () => {
                     />
 
                   </div>
-
-
-                  {/* SUBMIT BUTTON */}
-
                   <div className="mt-6">
 
                     <button
@@ -893,8 +786,6 @@ const Contact: React.FC = () => {
                           →
                         </span>
                       </span>
-
-                      {/* Button Shine */}
                       <span
                         className="
                           absolute
@@ -920,12 +811,6 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
-
-
-      {/* =====================================================
-          MAP SECTION
-      ====================================================== */}
-
       <section className="relative mx-auto max-w-7xl px-6 pb-16">
 
         <div
@@ -945,13 +830,9 @@ const Contact: React.FC = () => {
             hover:shadow-2xl
           "
         >
-
-          {/* Map Header */}
-
           <div className="p-6 lg:p-8">
 
             <div className="flex items-center gap-3">
-
               <div
                 className="
                   flex
@@ -982,13 +863,8 @@ const Contact: React.FC = () => {
                 </p>
 
               </div>
-
             </div>
-
           </div>
-
-
-          {/* MAP PLACEHOLDER */}
 
           <div
             className="
@@ -1004,9 +880,6 @@ const Contact: React.FC = () => {
               to-cyan-50
             "
           >
-
-            {/* Background Decoration */}
-
             <div
               className="
                 absolute
@@ -1032,9 +905,7 @@ const Contact: React.FC = () => {
                 blur-2xl
               "
             />
-
             <div className="relative z-10 text-center">
-
               <div
                 className="
                   mb-4
@@ -1047,23 +918,16 @@ const Contact: React.FC = () => {
               >
                 📍
               </div>
-
               <p className="font-semibold text-gray-700">
                 Bhubaneswar, Odisha
               </p>
-
               <p className="mt-1 text-sm text-gray-500">
                 Google Maps can be embedded here
               </p>
-
             </div>
-
           </div>
-
         </div>
-
       </section>
-
     </div>
   );
 };
