@@ -73,9 +73,7 @@ export const createContact = async (
       from: `"Cellexa Energy Website" <${process.env.EMAIL_USER}>`,
 
       to: process.env.RECEIVER_EMAIL,
-
       replyTo: email,
-
       subject: `New Contact Form: ${
         subject || "No Subject"
       }`,
