@@ -5,15 +5,9 @@ import menuRoutes from "./routes/menuRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 
-
 const app = express();
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
-
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

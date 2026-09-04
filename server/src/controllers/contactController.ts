@@ -1,26 +1,33 @@
 import type { Request, Response } from "express";
+import nodemailer from "nodemailer";
 import Contact from "../models/Contact.js";
-import nodemailer from "nodemailer"
 
 export const createContact = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const {
-      name,
-      email,
-      phone,
-      subject,
-      message,
-    } = req.body;
+    const { name, email, phone, subject, message } = req.body;
 
     if (!name || !email || !message) {
       res.status(400).json({
         success: false,
         message: "Name, email and message are required",
       });
+      return;
+    }
 
+    if (
+      !process.env.EMAIL_HOST ||
+      !process.env.EMAIL_USER ||
+      !process.env.EMAIL_PASSWORD ||
+      !process.env.RECEIVER_EMAIL
+    ) {
+      console.error("Missing required email environment variables");
+      res.status(500).json({
+        success: false,
+        message: "Server email configuration is missing",
+      });
       return;
     }
 
@@ -66,7 +73,6 @@ export const createContact = async (
     });
   } catch (error) {
     console.error("Create Contact Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Failed to submit contact form",
