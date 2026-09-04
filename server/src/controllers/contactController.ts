@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import Contact from "../models/Contact.js";
+import nodemailer from "nodemailer"
 
 export const createContact = async (
   req: Request,
@@ -29,6 +30,33 @@ export const createContact = async (
       phone,
       subject,
       message,
+    });
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: Number(process.env.EMAIL_PORT),
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Cellexa Energy Website" <${process.env.EMAIL_USER}>`,
+      to: process.env.RECEIVER_EMAIL,
+      replyTo: email,
+      subject: `New Contact Form: ${subject || "No Subject"}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+        <p><strong>Subject:</strong> ${subject || "Not provided"}</p>
+        <hr />
+        <h3>Message:</h3>
+        <p>${message}</p>
+      `,
     });
 
     res.status(201).json({
