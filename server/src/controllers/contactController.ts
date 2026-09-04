@@ -42,13 +42,13 @@ export const createContact = async (
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT),
-      secure: false,
+      secure: Number(process.env.EMAIL_PORT) === 465,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
       },
     });
-
+    
     await transporter.sendMail({
       from: `"Cellexa Energy Website" <${process.env.EMAIL_USER}>`,
       to: process.env.RECEIVER_EMAIL,
