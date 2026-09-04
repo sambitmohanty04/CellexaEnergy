@@ -51,7 +51,7 @@ const Contact: React.FC = () => {
       console.log("Sending data:", formData);
 
       const response = await API_URL.post(
-        "/contact",
+        "/api/contact",
         formData
       );
 
