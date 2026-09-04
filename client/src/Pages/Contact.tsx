@@ -27,6 +27,7 @@ const Contact: React.FC = () => {
 
     AOS.refresh();
   }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -39,6 +40,7 @@ const Contact: React.FC = () => {
     setSuccessMessage("");
     setErrorMessage("");
   };
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
