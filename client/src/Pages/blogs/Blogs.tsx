@@ -44,11 +44,7 @@ const Blogs: React.FC = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-
       const response = await API_URL.get("/api/blog");
-
-      console.log("Blog data:", response.data);
-
       setBlogs(response.data.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
