@@ -18,6 +18,17 @@ app.get("/", (_req, res) => {
   });
 });
 
+app.get("/debug-env", (_req, res) => {
+  res.json({
+    hasMongoUri: Boolean(process.env.MONGO_URI),
+    hasEmailHost: Boolean(process.env.EMAIL_HOST),
+    hasEmailPort: Boolean(process.env.EMAIL_PORT),
+    hasEmailUser: Boolean(process.env.EMAIL_USER),
+    hasEmailPassword: Boolean(process.env.EMAIL_PASSWORD),
+    hasReceiverEmail: Boolean(process.env.RECEIVER_EMAIL),
+  });
+});
+
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/blog", blogRoutes);
