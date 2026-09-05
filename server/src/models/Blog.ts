@@ -1,68 +1,42 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export interface IBlog extends Document {
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  image?: string;
-  author?: string;
-  category?: string;
-  published: boolean;
-}
-
-const blogSchema = new Schema<IBlog>(
+const blogSchema = new Schema(
   {
     title: {
       type: String,
       required: true,
-      trim: true,
     },
-
     slug: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
-      lowercase: true,
     },
-
-    excerpt: {
+    short_description: {
       type: String,
       required: true,
-      trim: true,
     },
-
     content: {
       type: String,
       required: true,
     },
-
     image: {
       type: String,
-      trim: true,
+      default: null,
     },
-
     author: {
       type: String,
-      trim: true,
+      default: "Admin",
     },
-
     category: {
       type: String,
-      trim: true,
+      default: null,
     },
-
     published: {
       type: Boolean,
       default: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-const Blog = mongoose.model<IBlog>("Blog", blogSchema);
-
-export default Blog;
+export default mongoose.model("Blog", blogSchema);

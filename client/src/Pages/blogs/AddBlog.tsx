@@ -7,10 +7,10 @@ interface BlogForm {
   slug: string;
   short_description: string;
   content: string;
-  image_url: string;
+  image: string;
   author: string;
   category: string;
-  status: string;
+  published: boolean;
 }
 
 const AddBlog = () => {
@@ -21,18 +21,16 @@ const AddBlog = () => {
     slug: "",
     short_description: "",
     content: "",
-    image_url: "",
+    image: "",
     author: "Admin",
     category: "",
-    status: "published",
+    published: true,
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
-  // ==========================================
-  // Generate slug
-  // ==========================================
   const generateSlug = (value: string) => {
     return value
       .toLowerCase()
@@ -42,9 +40,6 @@ const AddBlog = () => {
       .replace(/-+/g, "-");
   };
 
-  // ==========================================
-  // Handle title
-  // ==========================================
   const handleTitleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -57,9 +52,6 @@ const AddBlog = () => {
     }));
   };
 
-  // ==========================================
-  // Handle other inputs
-  // ==========================================
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -73,9 +65,15 @@ const AddBlog = () => {
     }));
   };
 
-  // ==========================================
-  // Submit
-  // ==========================================
+  const handleStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      published: e.target.value === "published",
+    }));
+  };
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -84,234 +82,193 @@ const AddBlog = () => {
     try {
       setLoading(true);
       setMessage("");
+      setIsError(false);
 
-      const response = await API_URL.post("/blogs", {
-        ...form,
-        published_at:
-          form.status === "published"
-            ? new Date().toISOString()
-            : null,
-      });
+      const response = await API_URL.post("/api/blog", form);
 
       console.log("Created blog:", response.data);
 
-      setMessage("Blog created successfully!");
+      setMessage("Blog created.");
 
-      // Go to blogs page after success
       setTimeout(() => {
         navigate("/blogs");
       }, 1000);
-
     } catch (error: any) {
       console.error("Error creating blog:", error);
 
+      setIsError(true);
       setMessage(
         error?.response?.data?.message ||
-          "Failed to create blog"
+          "Couldn't create the blog. Check the required fields and try again."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <main className="min-h-screen bg-slate-50 py-12">
+  const inputClasses =
+    "w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100";
 
-      <div className="max-w-4xl mx-auto px-6">
+  const labelClasses =
+    "mb-1.5 block text-sm font-medium text-slate-700";
+
+  return (
+    <main className="min-h-screen bg-slate-50">
+      <div className="mx-auto max-w-3xl px-6 py-10">
 
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between border-b border-slate-200 pb-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
+              Blog
+            </p>
+            <h1 className="mt-1 text-2xl font-bold text-slate-900">
+              New post
+            </h1>
+          </div>
 
-          <h1 className="text-base font-bold text-slate-900">
-            Add New Blog
-          </h1>
-
-          <p className="mt-2 text-slate-500">
-            Create a new blog article.
-          </p>
-
+          <button
+            type="button"
+            onClick={() => navigate("/blogs")}
+            className="text-sm font-medium text-slate-500 hover:text-slate-700"
+          >
+            ← All posts
+          </button>
         </div>
 
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6"
-        >
-
-          {/* Success / Error message */}
-          {message && (
-            <div className="px-4 py-3 rounded-xl bg-blue-50 text-blue-700">
-              {message}
-            </div>
-          )}
-
-          {/* ==================================
-              TITLE
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Blog Title *
-            </label>
-
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              onChange={handleTitleChange}
-              placeholder="Enter blog title"
-              required
-              className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        {/* Status message */}
+        {message && (
+          <div
+            className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
+              isError
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-emerald-200 bg-emerald-50 text-emerald-700"
+            }`}
+          >
+            {message}
           </div>
+        )}
 
-          {/* ==================================
-              SLUG
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Slug *
-            </label>
+        <form onSubmit={handleSubmit} className="space-y-8">
 
-            <input
-              type="text"
-              name="slug"
-              value={form.slug}
-              onChange={handleChange}
-              placeholder="blog-slug"
-              required
-              className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            <p className="text-xs text-slate-400 mt-2">
-              URL: /blogs/{form.slug || "blog-slug"}
-            </p>
-          </div>
-
-          {/* ==================================
-              SHORT DESCRIPTION
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Short Description
-            </label>
-
-            <textarea
-              name="short_description"
-              value={form.short_description}
-              onChange={handleChange}
-              rows={3}
-              placeholder="Enter a short description..."
-              className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            />
-          </div>
-
-          {/* ==================================
-              CONTENT
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Blog Content *
-            </label>
-
-            <textarea
-              name="content"
-              value={form.content}
-              onChange={handleChange}
-              rows={12}
-              placeholder="Write your blog content here..."
-              required
-              className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
-            />
-          </div>
-
-          {/* ==================================
-              IMAGE URL
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Image URL
-            </label>
-
-            <input
-              type="text"
-              name="image_url"
-              value={form.image_url}
-              onChange={handleChange}
-              placeholder="/images/solar.jpg"
-              className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* ==================================
-              AUTHOR + CATEGORY
-          ================================== */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
+          {/* Title + slug */}
+          <div className="rounded-xl border border-slate-200 bg-white p-6">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Author
-              </label>
-
+              <label className={labelClasses}>Title</label>
               <input
                 type="text"
-                name="author"
-                value={form.author}
+                name="title"
+                value={form.title}
+                onChange={handleTitleChange}
+                placeholder="How solar panels pay for themselves"
+                required
+                className={`${inputClasses} text-base font-medium`}
+              />
+            </div>
+
+            <div className="mt-4 flex items-center gap-2 text-sm">
+              <span className="text-slate-400">/blogs/</span>
+              <input
+                type="text"
+                name="slug"
+                value={form.slug}
                 onChange={handleChange}
-                placeholder="Admin"
-                className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="blog-slug"
+                required
+                className="flex-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-slate-600 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+              />
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-6">
+            <div>
+              <label className={labelClasses}>Short Description</label>
+              <textarea
+                name="short_description"
+                value={form.short_description}
+                onChange={handleChange}
+                rows={2}
+                placeholder="One or two sentences shown on the blog list page"
+                required
+                className={`${inputClasses} resize-none`}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Category
-              </label>
-
-              <input
-                type="text"
-                name="category"
-                value={form.category}
+              <label className={labelClasses}>Content</label>
+              <textarea
+                name="content"
+                value={form.content}
                 onChange={handleChange}
-                placeholder="Solar Energy"
-                className="w-full px-4 py-1 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={14}
+                placeholder="Write the post..."
+                required
+                className={`${inputClasses} resize-y font-mono text-[13px] leading-relaxed`}
               />
             </div>
-
           </div>
 
-          {/* ==================================
-              STATUS
-          ================================== */}
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Status
-            </label>
+          {/* Metadata */}
+          <div className="rounded-xl border border-slate-200 bg-white p-6">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <label className={labelClasses}>Cover image URL</label>
+                <input
+                  type="text"
+                  name="image"
+                  value={form.image}
+                  onChange={handleChange}
+                  placeholder="/images/solar.jpg"
+                  className={inputClasses}
+                />
+              </div>
 
-            <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200"
-            >
-                <option value="draft">
-                    Draft
-                </option>
+              <div>
+                <label className={labelClasses}>Category</label>
+                <input
+                  type="text"
+                  name="category"
+                  value={form.category}
+                  onChange={handleChange}
+                  placeholder="Solar Energy"
+                  className={inputClasses}
+                />
+              </div>
 
-                <option value="published">
-                    Published
-                </option>
-            </select>
+              <div>
+                <label className={labelClasses}>Author</label>
+                <input
+                  type="text"
+                  name="author"
+                  value={form.author}
+                  onChange={handleChange}
+                  placeholder="Admin"
+                  className={inputClasses}
+                />
+              </div>
+
+              <div>
+                <label className={labelClasses}>Status</label>
+                <select
+                  name="status"
+                  value={form.published ? "published" : "draft"}
+                  onChange={handleStatusChange}
+                  className={inputClasses}
+                >
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          {/* ==================================
-              BUTTONS
-          ================================== */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-
+          {/* Actions */}
+          <div className="flex items-center justify-end gap-3 border-t border-slate-200 pt-6">
             <button
               type="button"
               onClick={() => navigate("/blogs")}
-              className="text-md px-6 py-1 rounded-md border bg-gray-600 border-slate-200 text-slate-100 font-semibold hover:bg-slate-50 transition hover:text-slate-600"
+              className="rounded-lg px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100"
             >
               Cancel
             </button>
@@ -319,17 +276,14 @@ const AddBlog = () => {
             <button
               type="submit"
               disabled={loading}
-              className="text-md px-6 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-lg bg-blue-900 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Creating Blog..." : "Create Blog"}
+              {loading ? "Creating…" : "Create post"}
             </button>
-
           </div>
 
         </form>
-
       </div>
-
     </main>
   );
 };
