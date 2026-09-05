@@ -545,12 +545,13 @@ const Contact: React.FC = () => {
                   <div
                     data-aos="fade-down"
                     className="
-                      mb-6
+                      mb-3
+                      mt-3
                       rounded-xl
                       border
                       border-green-200
                       bg-green-50
-                      p-4
+                      p-2
                       text-sm
                       text-green-700
                     "
@@ -563,12 +564,13 @@ const Contact: React.FC = () => {
                   <div
                     data-aos="fade-down"
                     className="
-                      mb-6
+                      mb-3
+                      mt-3
                       rounded-xl
                       border
                       border-red-200
                       bg-red-50
-                      p-4
+                      p-2
                       text-sm
                       text-red-700
                     "
