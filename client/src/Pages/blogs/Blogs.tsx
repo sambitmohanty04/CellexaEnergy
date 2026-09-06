@@ -256,9 +256,11 @@ const Blogs: React.FC = () => {
                       {blog.title}
                     </h3>
 
+                    {/*
                     <p className="text-gray-600 text-sm leading-6 !mb-4 line-clamp-3">
                       {blog.excerpt}
                     </p>
+                    */}
 
                     <Link
                       to={`/blogs/${blog.slug}`}
