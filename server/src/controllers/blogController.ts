@@ -81,7 +81,7 @@ export const createBlog = async (
     const {
       title,
       slug,
-      short_description,
+      excerpt,
       content,
       image,
       author,
@@ -89,7 +89,7 @@ export const createBlog = async (
       published,
     } = req.body;
 
-    if (!title || !slug || !short_description || !content) {
+    if (!title || !slug || !excerpt || !content) {
       res.status(400).json({
         success: false,
         message: "Title, slug, short description and content are required",
@@ -112,7 +112,7 @@ export const createBlog = async (
     const blog = await Blog.create({
       title,
       slug,
-      short_description,
+      excerpt,
       content,
       image,
       author,

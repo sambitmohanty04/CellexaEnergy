@@ -11,7 +11,7 @@ const blogSchema = new Schema(
       required: true,
       unique: true,
     },
-    short_description: {
+    excerpt: {
       type: String,
       required: true,
     },

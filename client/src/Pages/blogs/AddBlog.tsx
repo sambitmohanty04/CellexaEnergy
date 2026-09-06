@@ -5,7 +5,7 @@ import API_URL from "../../service/api";
 interface BlogForm {
   title: string;
   slug: string;
-  short_description: string;
+  excerpt: string;
   content: string;
   image: string;
   author: string;
@@ -19,7 +19,7 @@ const AddBlog = () => {
   const [form, setForm] = useState<BlogForm>({
     title: "",
     slug: "",
-    short_description: "",
+    excerpt: "",
     content: "",
     image: "",
     author: "Admin",
@@ -185,8 +185,8 @@ const AddBlog = () => {
             <div>
               <label className={labelClasses}>Short Description</label>
               <textarea
-                name="short_description"
-                value={form.short_description}
+                name="excerpt"
+                value={form.excerpt}
                 onChange={handleChange}
                 rows={2}
                 placeholder="One or two sentences shown on the blog list page"

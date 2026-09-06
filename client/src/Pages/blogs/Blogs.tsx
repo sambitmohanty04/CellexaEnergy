@@ -9,7 +9,7 @@ interface Blog {
   _id: string;
   title: string;
   slug: string;
-  short_description: string | null;
+  excerpt: string | null;
   content: string;
   image: string | null;
   author: string | null;
@@ -257,7 +257,7 @@ const Blogs: React.FC = () => {
                     </h3>
 
                     <p className="text-gray-600 text-sm leading-6 !mb-4 line-clamp-3">
-                      {blog.short_description}
+                      {blog.excerpt}
                     </p>
 
                     <Link

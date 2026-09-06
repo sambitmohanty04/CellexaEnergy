@@ -16,7 +16,7 @@ interface Blog {
     id: number;
     title: string;
     slug: string;
-    short_description: string | null;
+    excerpt: string | null;
     content: string;
     image_url: string | null;
     author: string | null;
@@ -152,7 +152,7 @@ const BlogDetails = () => {
 
                         {/* Description */}
                         <p className="mt-6 text-sm md:text-sm text-slate-300 leading-relaxed max-w-3xl">
-                            {blog.short_description}
+                            {blog.excerpt}
                         </p>
 
                         {/* Meta */}
