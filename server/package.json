@@ -10,6 +10,7 @@
     "seed:menu": "tsx src/seedMenu.ts"
   },
   "dependencies": {
+    "cloudinary": "^2.11.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/multer": "^2.2.0",
     "@types/node": "^26.4.0",
     "@types/nodemailer": "^8.0.1",
     "tsx": "^4.23.12",
