@@ -4,6 +4,7 @@ import cors from "cors";
 import menuRoutes from "./routes/menuRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import careerRoutes from "./routes/careerRoutes.js";
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.get("/debug-env", (_req, res) => {
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/blog", blogRoutes);
+app.use("/api/career", careerRoutes);
 
 export default app;

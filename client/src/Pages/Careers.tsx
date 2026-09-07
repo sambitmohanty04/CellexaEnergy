@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ContactusComponent from "../Components/ContactusComponent";
+import API_URL from "../service/api";
+import { FaLocationDot } from "react-icons/fa6";
+import { HiOutlineBriefcase } from "react-icons/hi2";
+import ApplicationModal from "../Modals/ApplicationModal";
+
+interface Job {
+  _id: string;
+  title: string;
+  department: string | null;
+  location: string;
+  type: string;
+  description: string;
+}
 
 const Careers: React.FC = () => {
+
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeJob, setActiveJob] = useState<Job | null>(null);
+  
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await API_URL.get("/api/career/jobs");
+        setJobs(response.data.data);
+      } catch (error) {
+        console.log("Fetch Jobs Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchJobs()
+  }, []);
+
   return (
     <div className="bg-slate-50 min-h-screen">
 
-      {/* =========================
-          PAGE HEADER
-      ========================== */}
       <section className="relative overflow-hidden bg-blue-950 py-10">
 
-        {/* Background Decorations */}
         <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-600/20 blur-3xl" />
 
         <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -54,17 +83,12 @@ const Careers: React.FC = () => {
         </div>
       </section>
 
-
-      {/* =========================
-          INTRODUCTION
-      ========================== */}
       <section className="bg-white py-16">
 
         <div className="max-w-7xl mx-auto px-6">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            {/* Content */}
             <div
               data-aos="fade-right"
               data-aos-duration="900"
@@ -98,8 +122,6 @@ const Careers: React.FC = () => {
 
             </div>
 
-
-            {/* Highlight Card */}
             <div
               data-aos="fade-left"
               data-aos-duration="900"
@@ -147,10 +169,6 @@ const Careers: React.FC = () => {
 
       </section>
 
-
-      {/* =========================
-          WHY JOIN US
-      ========================== */}
       <section className="bg-slate-50 py-16">
 
         <div className="max-w-7xl mx-auto px-6">
@@ -182,7 +200,6 @@ const Careers: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            {/* Innovation */}
             <div
               data-aos="fade-up"
               data-aos-delay="100"
@@ -226,8 +243,6 @@ const Careers: React.FC = () => {
 
             </div>
 
-
-            {/* Growth */}
             <div
               data-aos="fade-up"
               data-aos-delay="200"
@@ -271,8 +286,6 @@ const Careers: React.FC = () => {
 
             </div>
 
-
-            {/* Collaboration */}
             <div
               data-aos="fade-up"
               data-aos-delay="300"
@@ -316,8 +329,6 @@ const Careers: React.FC = () => {
 
             </div>
 
-
-            {/* Purpose */}
             <div
               data-aos="fade-up"
               data-aos-delay="400"
@@ -367,17 +378,12 @@ const Careers: React.FC = () => {
 
       </section>
 
-
-      {/* =========================
-          OUR CULTURE
-      ========================== */}
       <section className="bg-white py-16">
 
         <div className="max-w-7xl mx-auto px-6">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            {/* Left */}
             <div
               data-aos="fade-right"
               data-aos-duration="900"
@@ -487,10 +493,6 @@ const Careers: React.FC = () => {
 
       </section>
 
-
-      {/* =========================
-          OPEN POSITIONS
-      ========================== */}
       <section className="bg-slate-50 py-16">
 
         <div className="max-w-6xl mx-auto px-6">
@@ -521,7 +523,7 @@ const Careers: React.FC = () => {
 
 
           {/* Job Card */}
-          <div
+          {/* <div
             data-aos="fade-up"
             className="
               group
@@ -575,12 +577,76 @@ const Careers: React.FC = () => {
 
             </div>
 
-          </div>
+          </div> */}
+
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+              <p className="mt-4 text-slate-500 text-sm">Loading openings...</p>
+            </div>
+          ) : jobs.length === 0 ? (
+            <div
+              className="bg-white rounded-2xl p-7 md:p-8 border border-gray-100 shadow-sm text-center"
+            >
+              <h3 className="text-xl font-bold text-gray-800 mb-2">
+                No Open Positions Right Now
+              </h3>
+              <p className="text-gray-600 text-sm">
+                We are always interested in connecting with talented
+                professionals who share our passion for innovation and
+                sustainable energy. Check back soon.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {jobs.map((job, index) => (
+                <div key={job._id}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                  className="group bg-white rounded-2xl p-7 md:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div>
+                      <span className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                        {job.type}
+                      </span>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">
+                        {job.title}
+                      </h3>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 mb-3">
+                      <span className="flex items-center gap-1">
+                        <FaLocationDot /> {job.location}
+                      </span>
+                      {job.department && (
+                        <span className="flex items-center gap-1">
+                          <HiOutlineBriefcase /> {job.department}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-600 text-sm leading-6 line-clamp-2">
+                      {job.description}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveJob(job)}
+                    className="shrink-0 inline-flex items-center justify-center bg-blue-900 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-lg transition duration-300"
+                  >
+                    Apply Now →
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
         </div>
 
       </section>
 
+      {activeJob && (
+        <ApplicationModal job={activeJob} onClose={() => setActiveJob(null)} />
+      )}
 
       {/* =========================
           CTA
