@@ -19,21 +19,21 @@ const Careers: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeJob, setActiveJob] = useState<Job | null>(null);
-  
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setLoading(true);
-        const response = await API_URL.get("/api/career/jobs");
-        setJobs(response.data.data);
-      } catch (error) {
-        console.log("Fetch Jobs Error: ", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchJobs()
-  }, []);
+
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await API_URL.get("/api/career/jobs");
+  //       setJobs(response.data.data);
+  //     } catch (error) {
+  //       console.log("Fetch Jobs Error: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchJobs()
+  // }, []);
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -578,8 +578,19 @@ const Careers: React.FC = () => {
             </div>
 
           </div> */}
-
-          {loading ? (
+          <div
+            className="bg-white rounded-2xl p-7 md:p-8 border border-gray-100 shadow-sm text-center"
+          >
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
+              No Open Positions Right Now
+            </h3>
+            <p className="text-gray-600 text-sm">
+              We are always interested in connecting with talented
+              professionals who share our passion for innovation and
+              sustainable energy. Check back soon.
+            </p>
+          </div>
+          {/*{loading ? (
             <div className="flex flex-col items-center justify-center py-16">
               <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
               <p className="mt-4 text-slate-500 text-sm">Loading openings...</p>
@@ -638,7 +649,7 @@ const Careers: React.FC = () => {
                 </div>
               ))}
             </div>
-          )}
+          )}*/}
 
         </div>
 
