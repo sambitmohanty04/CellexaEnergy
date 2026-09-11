@@ -19,6 +19,15 @@ interface Blog {
   updatedAt: string;
 }
 
+interface Pagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
 const categories = [
   "All",
   "Solar Energy",
@@ -27,30 +36,94 @@ const categories = [
   "Renewable energy",
 ];
 
+const LIMIT = 5;
+
 const Blogs: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-
-  const filteredBlogs =
-    activeCategory === "All"
-      ? blogs
-      : blogs.filter((blog) => blog.category === activeCategory);
 
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [page, activeCategory]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [activeCategory]);
 
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await API_URL.get("/api/blog");
+
+      const params: Record<string, string | number> = {
+        page,
+        limit: LIMIT,
+      };
+
+      if (activeCategory !== "All") {
+        params.category = activeCategory;
+      }
+
+      const response = await API_URL.get("/api/blog", { params });
+
       setBlogs(response.data.data);
+      setPagination(response.data.pagination);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const goToPage = (newPage: number) => {
+    if (newPage < 1 || (pagination && newPage > pagination.totalPages)) return;
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const renderPageNumbers = () => {
+    if (!pagination) return null;
+
+    const { totalPages } = pagination;
+    const pages: (number | string)[] = [];
+
+    const start = Math.max(1, page - 1);
+    const end = Math.min(totalPages, page + 1);
+
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) pages.push("...");
+    }
+
+    for (let i = start; i <= end; i++) pages.push(i);
+
+    if (end < totalPages) {
+      if (end < totalPages - 1) pages.push("...");
+      pages.push(totalPages);
+    }
+
+    return pages.map((p, idx) =>
+      typeof p === "number" ? (
+        <button
+          key={idx}
+          type="button"
+          onClick={() => goToPage(p)}
+          className={`w-9 h-9 rounded-lg text-sm font-semibold transition ${
+            p === page
+              ? "bg-blue-700 text-white shadow-md"
+              : "bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-700"
+          }`}
+        >
+          {p}
+        </button>
+      ) : (
+        <span key={idx} className="px-1 text-gray-400 text-sm">
+          {p}
+        </span>
+      )
+    );
   };
 
   return (
@@ -161,7 +234,7 @@ const Blogs: React.FC = () => {
                 Loading blogs...
               </p>
             </div>
-          ) : filteredBlogs.length === 0 ? (
+          ) : blogs.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-gray-400 text-5xl mb-4">📚</div>
               <h3 className="text-xl font-semibold text-gray-700">
@@ -172,106 +245,132 @@ const Blogs: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredBlogs.map((blog) => (
-                <article
-                  key={blog._id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
-                >
-                  <div className="relative h-56 overflow-hidden bg-slate-100">
-                    {blog.image ? (
-                      <img
-                        src={blog.image}
-                        alt={blog.title}
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                          const fallback =
-                            e.currentTarget.nextElementSibling as HTMLElement;
-                          if (fallback) {
-                            fallback.classList.remove("hidden");
-                            fallback.classList.add("grid");
-                          }
-                        }}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : null}
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {blogs.map((blog) => (
+                  <article
+                    key={blog._id}
+                    className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+                  >
+                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                      {blog.image ? (
+                        <img
+                          src={blog.image}
+                          alt={blog.title}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                            const fallback =
+                              e.currentTarget.nextElementSibling as HTMLElement;
+                            if (fallback) {
+                              fallback.classList.remove("hidden");
+                              fallback.classList.add("grid");
+                            }
+                          }}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : null}
 
-                    <div
-                      className={`
-                        ${blog.image ? "hidden" : "grid"}
-                        absolute inset-0 place-items-center
-                        bg-gradient-to-br from-blue-50 to-green-50
-                      `}
-                    >
-                      <div className="text-center">
-                        <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-white shadow-md flex items-center justify-center">
-                          <span className="text-3xl">📰</span>
+                      <div
+                        className={`
+                          ${blog.image ? "hidden" : "grid"}
+                          absolute inset-0 place-items-center
+                          bg-gradient-to-br from-blue-50 to-green-50
+                        `}
+                      >
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-white shadow-md flex items-center justify-center">
+                            <span className="text-3xl">📰</span>
+                          </div>
+                          <p className="text-sm font-semibold text-slate-500">
+                            No Image
+                          </p>
                         </div>
-                        <p className="text-sm font-semibold text-slate-500">
-                          No Image
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    {blog.category && (
-                      <div className="mb-4">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 text-blue-500 text-xs border border-blue-100">
-                          {blog.category}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 text-xs">
-                          <FaCalendarDays />
-                        </span>
-                        <span className="text-gray-400 text-xs">
-                          {blog.createdAt
-                            ? new Date(blog.createdAt).toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              }
-                            )
-                            : "Not published"}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 text-xs">
-                          <IoIosTimer />
-                        </span>
-                        <span className="text-gray-400 text-xs">
-                          5 min read
-                        </span>
                       </div>
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 leading-7 group-hover:text-blue-700 transition">
-                      {blog.title}
-                    </h3>
+                    <div className="p-6">
+                      {blog.category && (
+                        <div className="mb-4">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 text-blue-500 text-xs border border-blue-100">
+                            {blog.category}
+                          </span>
+                        </div>
+                      )}
 
-                    {/*
-                    <p className="text-gray-600 text-sm leading-6 !mb-4 line-clamp-3">
-                      {blog.excerpt}
-                    </p>
-                    */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400 text-xs">
+                            <FaCalendarDays />
+                          </span>
+                          <span className="text-gray-400 text-xs">
+                            {blog.createdAt
+                              ? new Date(blog.createdAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )
+                              : "Not published"}
+                          </span>
+                        </div>
 
-                    <Link
-                      to={`/blogs/${blog.slug}`}
-                      className="inline-flex items-center text-blue-700 font-semibold text-sm hover:text-blue-900 transition"
-                    >
-                      Read Article →
-                    </Link>
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400 text-xs">
+                            <IoIosTimer />
+                          </span>
+                          <span className="text-gray-400 text-xs">
+                            5 min read
+                          </span>
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-gray-800 mb-3 leading-7 group-hover:text-blue-700 transition">
+                        {blog.title}
+                      </h3>
+
+                      <p className="text-gray-600 text-sm leading-6 !mb-4 line-clamp-3">
+                        {blog.excerpt}
+                      </p>
+
+                      <Link
+                        to={`/blogs/${blog.slug}`}
+                        className="inline-flex items-center text-blue-700 font-semibold text-sm hover:text-blue-900 transition"
+                      >
+                        Read Article →
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              {pagination && pagination.totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-12">
+                  <button
+                    type="button"
+                    onClick={() => goToPage(page - 1)}
+                    disabled={!pagination.hasPrevPage}
+                    className="px-4 py-2 rounded-lg text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600"
+                  >
+                    ← Prev
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {renderPageNumbers()}
                   </div>
-                </article>
-              ))}
-            </div>
+
+                  <button
+                    type="button"
+                    onClick={() => goToPage(page + 1)}
+                    disabled={!pagination.hasNextPage}
+                    className="px-4 py-2 rounded-lg text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600"
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </section>
 

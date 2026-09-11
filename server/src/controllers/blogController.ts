@@ -6,19 +6,42 @@ import Blog from "../models/Blog.js";
 // ==========================================
 
 export const getBlogs = async (
-  _req: Request,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const blogs = await Blog.find({
-      published: true,
-    })
-      .sort({ createdAt: -1 })
-      .lean();
+    const page = Math.max(parseInt(req.query.page as string) || 1, 1);
+    const limit = Math.min(parseInt(req.query.limit as string) || 5, 50);
+    const skip = (page - 1) * limit;
+
+    const filter: Record<string, unknown> = { published: true };
+
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    const [blogs, total] = await Promise.all([
+      Blog.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Blog.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
 
     res.status(200).json({
       success: true,
       data: blogs,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
     });
   } catch (error) {
     console.error("Get Blogs Error:", error);

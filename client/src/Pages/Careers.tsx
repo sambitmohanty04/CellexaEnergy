@@ -192,7 +192,7 @@ const Careers: React.FC = () => {
             </div>
 
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-              Why Work With Cellexa?
+              Why Work With Cellexa ? 
             </h2>
 
           </div>
